@@ -10,9 +10,16 @@ import {
 import { SCREEN_PATHS, SCREENS_CODES } from "../constants";
 import { getRandomInt } from "../utils/globalHelpers";
 import Home from "../screens/Home";
+import Login from "../screens/Login";
 
 const Router = () => {
   const router = createBrowserRouter([
+    {
+      path: SCREEN_PATHS.Login,
+      element: (
+        <Login />
+      ),
+    },
     {
       path: SCREEN_PATHS.HOME,
       element: (

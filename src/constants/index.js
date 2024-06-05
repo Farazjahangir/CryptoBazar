@@ -1,9 +1,11 @@
 const SCREEN_PATHS = {
-  HOME: "/",
+  HOME: "/home",
+  Login: "/",
 };
 
 const SCREENS_CODES = {
-    HOME: 'home'
+    HOME: 'home',
+    LOGIN: 'login',
 };
 
 export {
