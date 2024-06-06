@@ -1,11 +1,11 @@
 @import "../../constants/colors.scss";
 
 .container {
-    background-color: $appBg;
     height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
+    background: $gradientBg;
 }
 
 .box {
