@@ -5,7 +5,7 @@ import TextInput from "../../Components/TextInput";
 import Button from "../../Components/Button";
 import styles from "./style.module.scss";
 
-const Login = () => {
+const Signup = () => {
   const navigate = useNavigate()
 
   const navigateTo = (path) => {
@@ -15,23 +15,24 @@ const Login = () => {
   return (
     <div className={styles.container}>
       <Box className={styles.box}>
-        <h1 className={styles.title}>Sign In</h1>
+        <h1 className={styles.title}>Create An Account</h1>
         <p>
-          Don't have account?{" "}
-          <span className={styles.link} onClick={() => navigateTo('/signup')}>Create an account</span>
+          Already have account? <span className={styles.link} onClick={() => navigateTo('/login')}>Sign In</span>
         </p>
         <div className="mt20">
+          <TextInput label="Fullname" inputClass={styles.input} type="email" />
+          <TextInput label="Contact no" inputClass={styles.input} type="email" />
+          <TextInput label="Address" inputClass={styles.input} type="email" />
           <TextInput label="Email" inputClass={styles.input} type="email" />
           <TextInput label="Password" type="password" />
-          <TextInput label="Password" type="password" />
+          <TextInput label="Confirm Password" type="password" />
         </div>
         <div className="mt20">
-          <Button value="Login" />
+          <Button value="Sign Up" />
         </div>
-        <p className={styles.forgotText}>Forgot Password?</p>
       </Box>
     </div>
   );
 };
 
-export default Login;
+export default Signup;

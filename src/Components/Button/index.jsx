@@ -1,9 +1,12 @@
 import styles from "./styles.module.scss"
 
-const Button = () => {
+const Button = ({
+    value,
+    onClick
+}) => {
     return (
-        <div className={styles.container}>
-            <p>Login</p>
+        <div className={styles.container} onClick={onClick}>
+            <p className={styles.text}>{value}</p>
         </div>
     )
 }

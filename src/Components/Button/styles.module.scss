@@ -2,8 +2,12 @@
 
 .container {
     background-color: $blue;
-    color: $white;
     padding: 8px;
     border-radius: 5px;
     cursor: pointer;
+}
+
+.text {
+    color: $white;
+    font-size: 19px;
 }

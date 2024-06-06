@@ -11,6 +11,7 @@ import { SCREEN_PATHS, SCREENS_CODES } from "../constants";
 import { getRandomInt } from "../utils/globalHelpers";
 import Home from "../screens/Home";
 import Login from "../screens/Login";
+import Signup from "../screens/Signup";
 
 const Router = () => {
   const router = createBrowserRouter([
@@ -18,6 +19,12 @@ const Router = () => {
       path: SCREEN_PATHS.Login,
       element: (
         <Login />
+      ),
+    },
+    {
+      path: SCREEN_PATHS.Signup,
+      element: (
+        <Signup />
       ),
     },
     {

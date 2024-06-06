@@ -67,6 +67,10 @@ button:focus-visible {
   }
 } */
 
+* {
+  font-family: 'Roboto', sans-serif;
+}
+
 h1, h2, p {
   margin: 0;
 }
