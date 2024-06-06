@@ -1,0 +1,9 @@
+@import "../../constants/colors.scss";
+
+.container {
+    background-color: $blue;
+    color: $white;
+    padding: 8px;
+    border-radius: 5px;
+    cursor: pointer;
+}

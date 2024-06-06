@@ -1,0 +1,32 @@
+@import "../../constants/colors.scss";
+
+.container {
+    background-color: $loginBg;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.box {
+    background-color: $white;
+    padding: 25px;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.title {
+    margin-bottom: 10px;
+}
+
+.link {
+    color: $link;
+    cursor: pointer;
+    &:hover {
+        text-decoration: underline;
+    }
+}
+
+.input {
+    margin-top: 100px;
+}
