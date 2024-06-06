@@ -8,16 +8,19 @@ const Login = () => {
   return (
     <div className={styles.container}>
       <Box className={styles.box}>
-        <h2 className={styles.title}>Sign In</h2>
+        <h1 className={styles.title}>Sign In</h1>
         <p>
           Don't have account?{" "}
           <span className={styles.link}>Create an account</span>
         </p>
-        <TextInput label="Email" inputClass={styles.input}  type="email" />
-        <TextInput label="Password" type="password" />
-        <div className="mt10">
+        <div className="mt20">
+          <TextInput label="Email" inputClass={styles.input} type="email" />
+          <TextInput label="Password" type="password" />
+        </div>
+        <div className="mt20">
           <Button />
         </div>
+        <p className={styles.forgotText}>Forgot Password?</p>
       </Box>
     </div>
   );
