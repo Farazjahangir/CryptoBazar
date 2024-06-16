@@ -1,0 +1,41 @@
+@import "../../constants/colors.scss";
+
+.container {
+    background-color: $white;
+    display: flex;
+    padding: 20px;
+    position: fixed;
+    z-index: 1;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.leftContainer {
+    display: flex;
+    flex: 1;
+}
+
+.cartIcon {
+    width: 27px;
+    cursor: pointer;
+}
+
+.userIcon {
+    width: 25px;
+    margin-right: 15px;
+    cursor: pointer;
+}
+
+.linkBox {
+    display: flex;
+    margin-left: 60px;
+}
+
+.link {
+    margin-right: 25px;
+    cursor: pointer;
+    transition: color 0.5s ease;
+    &:hover {
+        color: $blue;
+    }
+}

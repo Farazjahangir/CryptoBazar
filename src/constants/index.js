@@ -1,5 +1,5 @@
 const SCREEN_PATHS = {
-  HOME: "/home",
+  HOME: "/",
   Login: "/login",
   Signup: "/signup"
 };
@@ -9,7 +9,10 @@ const SCREENS_CODES = {
     LOGIN: 'login',
 };
 
+const ROUTES_WITHOUT_HEADER = ["/login", "/signup"]
+
 export {
     SCREENS_CODES,
-    SCREEN_PATHS
+    SCREEN_PATHS,
+    ROUTES_WITHOUT_HEADER
 }

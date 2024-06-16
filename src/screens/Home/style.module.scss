@@ -1,0 +1,17 @@
+@import "../../constants/colors.scss";
+
+.container {
+    background-color: $appBg;
+    padding-bottom: 100px;
+}
+
+.servicesBox {
+    background-color: $white;
+    margin: 0 auto;
+    border-radius: 3px;
+    display: flex;
+    justify-content: space-around;
+    height: 120px;
+    align-items: center;
+    width: 70%;
+}

@@ -1,0 +1,17 @@
+@import "../../../constants/colors.scss";
+
+.banner {
+ height: 80vh;
+ background-repeat: no-repeat;
+ display: flex;
+ align-items: center;
+//  justify-content: center;
+}
+
+.textBox {
+    margin-left: 80px;
+}
+
+.details {
+    width: 600px;
+}

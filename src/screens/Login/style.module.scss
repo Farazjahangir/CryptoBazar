@@ -22,7 +22,7 @@
 }
 
 .link {
-    color: $link;
+    color: $blue;
     cursor: pointer;
     &:hover {
         text-decoration: underline;
@@ -39,7 +39,7 @@
 }
 
 .forgotText {
-    color: $link;
+    color: $blue;
     cursor: pointer;
     margin-top: 25px;
 }

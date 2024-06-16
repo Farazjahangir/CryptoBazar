@@ -7,25 +7,26 @@ import {
   useLocation,
 } from "react-router-dom";
 
-import { SCREEN_PATHS, SCREENS_CODES } from "../constants";
+import {
+  SCREEN_PATHS,
+  SCREENS_CODES,
+  ROUTES_WITHOUT_HEADER,
+} from "../constants";
 import { getRandomInt } from "../utils/globalHelpers";
 import Home from "../screens/Home";
 import Login from "../screens/Login";
 import Signup from "../screens/Signup";
+import Header from "../Components/Header";
 
 const Router = () => {
   const router = createBrowserRouter([
     {
       path: SCREEN_PATHS.Login,
-      element: (
-        <Login />
-      ),
+      element: <Login />,
     },
     {
       path: SCREEN_PATHS.Signup,
-      element: (
-        <Signup />
-      ),
+      element: <Signup />,
     },
     {
       path: SCREEN_PATHS.HOME,
@@ -37,16 +38,22 @@ const Router = () => {
     },
   ]);
 
+  const location = useLocation();
+
+
   return (
-    <Routes>
-      {router.routes.map((item) => (
-        <Route
-          path={item.path}
-          element={item.element}
-          key={getRandomInt(1000000, 100000000)}
-        />
-      ))}
-    </Routes>
+    <>
+      {!ROUTES_WITHOUT_HEADER.includes(location.pathname) && <Header />}
+      <Routes>
+        {router.routes.map((item) => (
+          <Route
+            path={item.path}
+            element={item.element}
+            key={getRandomInt(1000000, 100000000)}
+          />
+        ))}
+      </Routes>
+    </>
   );
 };
 
