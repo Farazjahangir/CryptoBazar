@@ -1,12 +1,12 @@
 @import "../../constants/colors.scss";
 
 .container {
-    background-color: $appBg;
+    background-color: $white;
     padding-bottom: 100px;
 }
 
 .servicesBox {
-    background-color: $white;
+    background-color: $lightestGrey;
     margin: 0 auto;
     border-radius: 3px;
     display: flex;
@@ -14,4 +14,22 @@
     height: 120px;
     align-items: center;
     width: 70%;
+}
+
+.head1 {
+    text-align: center;
+    margin-bottom: 5px;
+}
+
+.borderLine {
+    border-bottom: 3px solid $headBoderLineColor;
+    width: 130px;
+    margin: 0 auto;
+    margin-bottom: 13px;
+}
+
+.newArrivalSection {
+    margin-top: 90px;
+    background-color: $sectionCrolor;
+    padding: 20px;
 }
