@@ -17,6 +17,7 @@ import Home from "../screens/Home";
 import Login from "../screens/Login";
 import Signup from "../screens/Signup";
 import Header from "../Components/Header";
+import Footer from "../Components/Footer";
 
 const Router = () => {
   const router = createBrowserRouter([
@@ -40,7 +41,6 @@ const Router = () => {
 
   const location = useLocation();
 
-
   return (
     <>
       {!ROUTES_WITHOUT_HEADER.includes(location.pathname) && <Header />}
@@ -53,6 +53,11 @@ const Router = () => {
           />
         ))}
       </Routes>
+      {!ROUTES_WITHOUT_HEADER.includes(location.pathname) && (
+        <div style={{paddingLeft: 20, paddingRight: 20 }}>
+          <Footer />
+        </div>
+      )}
     </>
   );
 };
