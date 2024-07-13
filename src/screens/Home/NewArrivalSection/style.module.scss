@@ -66,3 +66,13 @@
     justify-content: space-between;
     margin-top: 10px;
 }
+
+.imageDiv {
+    position: relative;
+}
+
+.ratingDiv {
+    position: absolute;
+    top: 5px;
+    right: 10px
+}

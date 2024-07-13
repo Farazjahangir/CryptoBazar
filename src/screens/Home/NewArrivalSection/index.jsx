@@ -4,6 +4,7 @@ import shoe from "../../../assets/images/shoe.jpg";
 import maleIcon from "../../../assets/icons/maleIcon.png";
 import femaleIcon from "../../../assets/icons/femaleIcon.png";
 import { Tooltip } from "@mui/material";
+import Rating from "../../../Components/Rating";
 import styles from "./style.module.scss";
 
 const NewArrivalSection = () => {
@@ -15,7 +16,12 @@ const NewArrivalSection = () => {
         {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((i) => {
           return (
             <div className={styles.productBox}>
-              <img src={shoe} className={styles.productImg} />
+              <div className={styles.imageDiv}>
+                <img src={shoe} className={styles.productImg} />
+                <div className={styles.ratingDiv}>
+                  <Rating value={3} readonly={true} />
+                </div>
+              </div>
               <div className={styles.detailsBox}>
                 <div className={styles.miniBox}>
                   <p className={styles.productTypeText}>product Type</p>
