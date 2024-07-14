@@ -1,0 +1,23 @@
+@import "../../constants/colors.scss";
+
+.container {
+    padding: 35px;
+    display: flex;
+}
+
+.leftContainer {
+    width: 180px;
+}
+
+.heading {
+    font-size: 23px;
+}
+
+.rightContainer {
+    background-color: $lightestGrey;
+    flex: 1;
+    padding: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}

@@ -1,7 +1,8 @@
 const SCREEN_PATHS = {
   HOME: "/",
   Login: "/login",
-  Signup: "/signup"
+  Signup: "/signup",
+  Shop: '/shop'
 };
 
 const SCREENS_CODES = {
