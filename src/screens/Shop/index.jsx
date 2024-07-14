@@ -18,7 +18,7 @@ const Shop = () => {
         />
       </div>
       <div className={styles.rightContainer}>
-        {[1, 2, 3, 4, 5, 6, 7, 8].map((item) => (
+        {[1].map((item) => (
           <ProductDisplay />
         ))}
       </div>

@@ -53,9 +53,9 @@ const Router = () => {
   const location = useLocation();
 
   return (
-    <>
+    <div style={{ position: 'relative', minHeight: '100vh' }}>
       {!ROUTES_WITHOUT_HEADER.includes(location.pathname) && <Header />}
-      <div style={{ marginTop: 60 }}>
+      <div style={{ marginTop: 60, paddingBottom: 180 }}>
         <Routes>
           {router.routes.map((item) => (
             <Route
@@ -67,11 +67,11 @@ const Router = () => {
         </Routes>
       </div>
       {!ROUTES_WITHOUT_HEADER.includes(location.pathname) && (
-        <div style={{paddingLeft: 20, paddingRight: 20 }}>
+        <div style={{ position: 'absolute', width: '100%', bottom: 0 }}>
           <Footer />
         </div>
       )}
-    </>
+    </div>
   );
 };
 
