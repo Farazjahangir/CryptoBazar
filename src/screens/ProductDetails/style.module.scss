@@ -1,14 +1,17 @@
 @import "../../constants/colors.scss";
 
 .image {
-  width: 500px;
-  height: 500px;
+    width: 100%;
 }
 
 .categoryName {
   font-size: 18px;
-  color: $headBoderLineColor;
+  color: $white;
   margin-bottom: 10px;
+  background-color: $headBoderLineColor;
+  width: max-content;
+  padding: 5px 12px;
+  border-radius: 5px;
 }
 
 .productName {
@@ -50,6 +53,7 @@
 
 .text {
   margin-left: 10px;
+  color: $green
 }
 
 .priceBox {
@@ -60,11 +64,4 @@
 .productAbout {
   margin-bottom: 20px;
   color: $grey;
-}
-
-@media only screen and (max-width: 1200px) {
-  .image {
-    width: 400px;
-    height: 400px;
-  }
 }
