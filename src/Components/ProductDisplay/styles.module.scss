@@ -16,8 +16,8 @@
 }
 
 .productName {
-    color: $black;
-    font-size: 18px;
+    color: $headBoderLineColor;
+    font-size: 21px;
     &:hover {
         text-decoration: underline;
         cursor: pointer;
@@ -27,16 +27,14 @@
 }
 
 .productTypeText {
-    color: $black;
+    color: $grey;
     font-size: 17px;
     margin-top: 8px;
 }
 
 .price {
-    margin-top: 8px;
-    font-size: 18px;
-    color: $headBoderLineColor;
-}
+    font-size: 21px;
+    }
 
 .genderIcon {
     width: 20px;
@@ -48,6 +46,7 @@
     display: flex;
     justify-content: space-between;
     margin-top: 10px;
+    align-items: center;
 }
 
 .imageDiv {

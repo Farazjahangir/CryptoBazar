@@ -1,4 +1,10 @@
-import { Tooltip } from "@mui/material";
+import {
+  Tooltip,
+  Card,
+  CardActions,
+  CardContent,
+  CardMedia,
+} from "@mui/material";
 
 import shoe from "../../assets/images/shoe.jpg";
 import maleIcon from "../../assets/icons/maleIcon.png";
@@ -8,25 +14,24 @@ import styles from "./styles.module.scss";
 
 const ProductDisplay = () => {
   return (
-    <div className={styles.productBox}>
-      <div className={styles.imageDiv}>
-        <img src={shoe} className={styles.productImg} />
-        <div className={styles.ratingDiv}>
-          <Rating value={3} readonly={true} />
-        </div>
-      </div>
-      <div className={styles.detailsBox}>
-        <div className={styles.miniBox}>
-          <p className={styles.productTypeText}>product Type</p>
-          <p className={styles.price}>50$</p>
-        </div>
-        <div className={styles.miniBox}>
-          <p className={styles.productName}>Shoe Name</p>
-          <Tooltip title="Male" placement="top">
-            <img src={maleIcon} className={styles.genderIcon} />
-          </Tooltip>
-        </div>
-      </div>
+    <div>
+      <Card sx={{ borderRadius: 3 }}>
+        <CardMedia
+          component="img"
+          alt="green iguana"
+          image={shoe}
+        />
+        <CardContent>
+          <div className={styles.detailsBox}>
+            <p className={styles.productName}>Shoe Name</p>
+            <p className={styles.productTypeText}>Product Type</p>
+            <div className={styles.miniBox}>
+              <p className={styles.price}>50$</p>
+              <Rating value={3} readonly={true} />
+            </div>
+          </div>
+        </CardContent>
+      </Card>
     </div>
   );
 };
