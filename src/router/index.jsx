@@ -18,6 +18,7 @@ import Home from "../screens/Home";
 import Login from "../screens/Login";
 import Signup from "../screens/Signup";
 import Shop from "../screens/Shop";
+import ProductDetails from "../screens/ProductDetails";
 
 import Header from "../Components/Header";
 import Footer from "../Components/Footer";
@@ -45,6 +46,14 @@ const Router = () => {
       element: (
         // <ProtectedRoute screenName={SCREENS_CODES.DASHBOARD}>
         <Shop />
+        // </ProtectedRoute>
+      ),
+    },
+    {
+      path: SCREEN_PATHS.PRODUCT_DETAILS,
+      element: (
+        // <ProtectedRoute screenName={SCREENS_CODES.DASHBOARD}>
+        <ProductDetails />
         // </ProtectedRoute>
       ),
     },

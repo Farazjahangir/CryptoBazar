@@ -2,7 +2,8 @@ const SCREEN_PATHS = {
   HOME: "/",
   Login: "/login",
   Signup: "/signup",
-  Shop: '/shop'
+  Shop: '/shop',
+  PRODUCT_DETAILS: '/product-details'
 };
 
 const SCREENS_CODES = {

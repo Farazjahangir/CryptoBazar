@@ -10,10 +10,10 @@ import femaleIcon from "../../assets/icons/femaleIcon.png";
 import Rating from "../../Components/Rating";
 import styles from "./styles.module.scss";
 
-const ProductDisplay = () => {
+const ProductDisplay = ({onNameClick = () => {}}) => {
   return (
     <div>
-      <Card sx={{ borderRadius: 3 }}>
+      <Card sx={{ borderRadius: 3, cursor: 'pointer' }} onClick={onNameClick}>
         <CardMedia
           component="img"
           alt="green iguana"

@@ -1,0 +1,70 @@
+@import "../../constants/colors.scss";
+
+.image {
+  width: 500px;
+  height: 500px;
+}
+
+.categoryName {
+  font-size: 18px;
+  color: $headBoderLineColor;
+  margin-bottom: 10px;
+}
+
+.productName {
+  font-size: 19px;
+  margin-bottom: 10px;
+}
+
+.price {
+  font-size: 21px;
+  color: $grey;
+  margin-right: 20px;
+}
+
+.counterBox {
+  display: flex;
+  align-items: center;
+}
+
+.counterContainer {
+  margin-right: 20px;
+}
+
+.btnBox {
+  width: 150px;
+}
+
+.borderLine1 {
+  border-bottom: 1px solid $grey;
+  margin-top: 20px;
+}
+.info {
+  margin-top: 40px;
+}
+
+.checkMarks {
+  display: flex;
+  margin-top: 5px;
+}
+
+.text {
+  margin-left: 10px;
+}
+
+.priceBox {
+  display: flex;
+  margin-bottom: 20px;
+}
+
+.productAbout {
+  margin-bottom: 20px;
+  color: $grey;
+}
+
+@media only screen and (max-width: 1200px) {
+  .image {
+    width: 400px;
+    height: 400px;
+  }
+}
