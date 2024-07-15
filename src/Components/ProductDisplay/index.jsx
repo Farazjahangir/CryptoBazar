@@ -1,7 +1,5 @@
 import {
-  Tooltip,
   Card,
-  CardActions,
   CardContent,
   CardMedia,
 } from "@mui/material";
