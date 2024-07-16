@@ -1,6 +1,7 @@
 import { Tabs, TabPanel } from "../../../Components/Tabs";
 
 import CustomerReviews from "../CustomerReviews";
+import WriteReview from "../WriteReview";
 
 const ReviewSection = () => {
   return (
@@ -9,7 +10,7 @@ const ReviewSection = () => {
         <CustomerReviews />
       </TabPanel>
       <TabPanel>
-        <h2>content 2</h2>
+        <WriteReview />
       </TabPanel>
     </Tabs>
   );

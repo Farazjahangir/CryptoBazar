@@ -1,0 +1,22 @@
+@import '../../../constants/colors.scss';
+
+.container {
+    display: flex;
+    flex-direction: column;
+    max-width: 600px;
+    margin: 0 auto;
+    margin-top: 30px;
+}
+
+.text {
+    margin-bottom: 10px;
+}
+
+.textInputBox {
+    margin-top: 30px;
+    width: 100%;
+}
+
+.btnBox {
+    margin-top: 20px;
+}
