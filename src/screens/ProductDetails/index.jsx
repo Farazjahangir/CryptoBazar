@@ -7,6 +7,7 @@ import Rating from "../../Components/Rating";
 import Counter from "../../Components/Counter";
 import shoe from "../../assets/images/shoe.jpg";
 import Button from "../../Components/Button";
+import ReviewSection from "./ReviewSection";
 import styles from "./style.module.scss";
 
 const ProductDetails = () => {
@@ -87,6 +88,9 @@ const ProductDetails = () => {
           </div>
         </Grid>
       </Grid>
+      <div className={styles.reviewSection}>
+        <ReviewSection />
+      </div>
     </Container>
   );
 };

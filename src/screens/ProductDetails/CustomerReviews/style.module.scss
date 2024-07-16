@@ -1,0 +1,64 @@
+@import "../../../constants/colors.scss";
+
+.ratingsProgress {
+    display: flex;
+    align-items: center;
+}
+
+.innerBar {
+    background-color: $headBoderLineColor!important;
+}
+
+.bar {
+    flex: 1!important;
+    height: 12px!important;
+}
+
+.barBox {
+    width: 150px;
+    margin-left: 25px;
+}
+
+.ratingCount {
+    margin-left: 25px;
+}
+
+.avgRatingBox {
+    display: flex;
+    align-items: center;
+}
+
+.avgRatingCount {
+    margin-left: 10px;
+    font-size: 17px;
+}
+
+.text {
+    margin-top: 6px;
+    font-size: 18px;
+}
+
+.reviewsBox {
+    margin-top: 30px;
+    display: flex;
+    align-items: center;
+}
+
+.profileImgBox {
+    width: 35px;
+    height: 35px;
+    border: 1px solid $lightestGrey;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: $lightestGrey;
+}
+
+.nameBox {
+    margin-left: 10px;
+}
+
+.review {
+    margin-top: 10px;
+    margin-bottom: 20px;
+}

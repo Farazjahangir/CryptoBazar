@@ -1,7 +1,7 @@
 import { Rating as MUIRating } from "@mui/material";
 
-const Rating = ({ readonly = false, value, onChange }) => {
-  return <MUIRating readOnly={readonly} value={4} onChange={onChange} />;
+const Rating = ({ readonly = false, value = 4, onChange, size= 'medium' }) => {
+  return <MUIRating readOnly={readonly} value={value} onChange={onChange} size={size} />;
 };
 
 export default Rating;

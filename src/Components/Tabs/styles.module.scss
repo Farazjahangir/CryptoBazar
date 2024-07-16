@@ -1,0 +1,13 @@
+@import "../../constants/colors.scss";
+
+.selectedTab {
+    background-color: $headBoderLineColor;
+    color: $white;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+.tabHeader {
+    padding: 0;
+    border-bottom: 1px solid $grey;
+}
