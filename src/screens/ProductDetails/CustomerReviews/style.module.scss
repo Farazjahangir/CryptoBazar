@@ -44,16 +44,6 @@
     align-items: center;
 }
 
-.profileImgBox {
-    width: 35px;
-    height: 35px;
-    border: 1px solid $lightestGrey;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: $lightestGrey;
-}
-
 .nameBox {
     margin-left: 10px;
 }
@@ -61,4 +51,13 @@
 .review {
     margin-top: 10px;
     margin-bottom: 20px;
+}
+
+.img {
+    background-image: url(/src/assets/images/profileDummy.png);
+    width: 40px;
+    height: 40px;
+    border-radius: 20px;
+    background-size: cover;
+    background-position: center;
 }

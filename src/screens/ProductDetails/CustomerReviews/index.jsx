@@ -1,5 +1,4 @@
 import { LinearProgress, Grid, Divider } from "@mui/material";
-import { Person } from "@mui/icons-material";
 
 import Rating from "../../../Components/Rating";
 import { reviews } from "../../../constants/dummy";
@@ -57,9 +56,7 @@ const CustomerReviews = () => {
       {reviews.map((item) => (
         <>
           <div className={styles.reviewsBox}>
-            <div className={styles.profileImgBox}>
-              <Person fontSize="large" />
-            </div>
+            <div className={styles.img} />
             <div className={styles.nameBox}>
               <p>Faraz Jahangir</p>
               <Rating value={item.rating} size="small" />
