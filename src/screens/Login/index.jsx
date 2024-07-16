@@ -28,7 +28,7 @@ const Login = () => {
             <TextInput label="Password" type="password" />
           </div>
           <div className="mt20">
-            <Button value="Login" />
+            <Button value="Login" onClick={() => navigateTo('/')} />
           </div>
         </div>
         <p className={styles.forgotText}>Forgot Password?</p>

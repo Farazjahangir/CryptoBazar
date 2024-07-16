@@ -21,7 +21,7 @@ const NewArrivalSection = () => {
           {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((i) => {
             return (
               <Grid xs={6} md={4} lg={3} item>
-                <ProductDisplay onNameClick={() => navigateTo('product-details')} />
+                <ProductDisplay onClick={() => navigateTo('/product-details')} />
               </Grid>
             );
           })}

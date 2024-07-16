@@ -64,7 +64,7 @@ const Router = () => {
   return (
     <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
       {!ROUTES_WITHOUT_HEADER.includes(location.pathname) && <Header />}
-      <div style={{ marginTop: 60, paddingBottom: 50, flex: 1 }}>
+      <div style={{ flex: 1 }}>
         <Routes>
           {router.routes.map((item) => (
             <Route
