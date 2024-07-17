@@ -22,6 +22,7 @@ import ProductDetails from "../screens/ProductDetails";
 
 import Header from "../Components/Header";
 import Footer from "../Components/Footer";
+import CartDrawer from "../Components/CartDrawer";
 
 const Router = () => {
   const router = createBrowserRouter([
@@ -63,6 +64,7 @@ const Router = () => {
 
   return (
     <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
+      {!ROUTES_WITHOUT_HEADER.includes(location.pathname) && <CartDrawer />}
       {!ROUTES_WITHOUT_HEADER.includes(location.pathname) && <Header />}
       <div style={{ flex: 1 }}>
         <Routes>
