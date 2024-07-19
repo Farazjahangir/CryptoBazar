@@ -4,15 +4,21 @@ import { Divider } from "@mui/material";
 import Counter from "../Counter";
 import clsx from "clsx";
 
+import { useDrawer } from "../../ContextApi/DrawerContext";
 import Button from "../Button";
 import shoe from "../../assets/images/shoe.jpg";
 import Drawer from "../Drawer";
 import styles from "./style.module.scss";
 
-const CartDrawer = () => {
+const CartDrawer = ({ open }) => {
   const [counter, setCounter] = useState(1);
+  const { drawerState, setDrawerState } = useDrawer();
+
+  const toggleDrawer = () => {
+    setDrawerState(!drawerState);
+  };
   return (
-    <Drawer open={true} minWidth={380}>
+    <Drawer open={drawerState} minWidth={380} onClose={toggleDrawer}>
       <div className={styles.container}>
         <div className={styles.pad18}>
           <div className={styles.header}>
@@ -20,7 +26,11 @@ const CartDrawer = () => {
               <h2>Cart</h2>
               <h2 className={styles.itemCount}>3</h2>
             </div>
-            <Close fontSize="large" className={styles.closeIcon} />
+            <Close
+              fontSize="large"
+              className={styles.closeIcon}
+              onClick={toggleDrawer}
+            />
           </div>
         </div>
         <Divider />

@@ -1,15 +1,22 @@
 import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
 
+import { useDrawer } from "../../ContextApi/DrawerContext";
 import userIcon from "../../assets/icons/user.png"
 import cartIcon from "../../assets/icons/cart.png"
 import styles from "./style.module.scss"
 
 
 const Header = () => {
+  const { setDrawerState, drawerState } = useDrawer();
   const navigate = useNavigate()
 
   const navigateTo = (path) => {
     navigate(path)
+  }
+
+  const toggleDrawer = () => {
+    setDrawerState(!drawerState)
   }
 
   return (
@@ -24,7 +31,7 @@ const Header = () => {
       </div>
       <div>
         <img src={userIcon} className={styles.userIcon} />
-        <img src={cartIcon} className={styles.cartIcon} />
+        <img src={cartIcon} className={styles.cartIcon} onClick={toggleDrawer} />
       </div>
     </div>
   );

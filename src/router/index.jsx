@@ -6,6 +6,7 @@ import {
   Routes,
   useLocation,
 } from "react-router-dom";
+import { useState } from "react";
 
 import {
   SCREEN_PATHS,
@@ -25,6 +26,7 @@ import Footer from "../Components/Footer";
 import CartDrawer from "../Components/CartDrawer";
 
 const Router = () => {
+  const [drawerState, setDrawerState] = useState(false);
   const router = createBrowserRouter([
     {
       path: SCREEN_PATHS.Login,
@@ -63,8 +65,12 @@ const Router = () => {
   const location = useLocation();
 
   return (
-    <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
-      {!ROUTES_WITHOUT_HEADER.includes(location.pathname) && <CartDrawer />}
+    <div
+      style={{ minHeight: "100vh", display: "flex", flexDirection: "column" }}
+    >
+      {!ROUTES_WITHOUT_HEADER.includes(location.pathname) && (
+        <CartDrawer open={drawerState} />
+      )}
       {!ROUTES_WITHOUT_HEADER.includes(location.pathname) && <Header />}
       <div style={{ flex: 1 }}>
         <Routes>
