@@ -1,43 +1,59 @@
 @import "../../constants/colors.scss";
 
 .container {
-    background-color: $white;
-    display: flex;
-    padding: 20px;
-    position: fixed;
-    z-index: 100;
-    width: 100%;
-    box-sizing: border-box;
-    height: 60px;
-    top: 0;
+  background-color: $white;
+  display: flex;
+  padding: 20px;
+  position: fixed;
+  z-index: 100;
+  width: 100%;
+  box-sizing: border-box;
+  height: 60px;
+  top: 0;
+  align-items: center;
 }
 
 .leftContainer {
-    display: flex;
-    flex: 1;
+  display: flex;
+  flex: 1;
 }
 
 .cartIcon {
-    width: 27px;
-    cursor: pointer;
+  width: 27px;
+  cursor: pointer;
 }
 
 .userIcon {
-    width: 25px;
-    margin-right: 15px;
-    cursor: pointer;
+  width: 25px;
+  margin-right: 15px;
+  cursor: pointer;
 }
 
 .linkBox {
-    display: flex;
-    margin-left: 60px;
+  display: flex;
+  margin-left: 60px;
 }
 
 .link {
-    margin-right: 25px;
-    cursor: pointer;
-    transition: color 0.5s ease;
-    &:hover {
-        color: $headBoderLineColor;
-    }
+  margin-right: 25px;
+  cursor: pointer;
+  transition: color 0.5s ease;
+  &:hover {
+    color: $headBoderLineColor;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .link {
+    margin-right: 15px;
+    font-size: 14px;
+  }
+  .userIcon {
+    width: 20px;
+    margin-right: 7px;
+  }
+
+  .cartIcon {
+    width: 22px;
+  }
 }
