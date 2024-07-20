@@ -12,6 +12,7 @@ const Header = () => {
   const navigate = useNavigate()
 
   const navigateTo = (path) => {
+    console.log("skjdlksajdlksajdl")
     navigate(path)
   }
 
@@ -22,7 +23,7 @@ const Header = () => {
   return (
     <div className={styles.container}>
       <div className={styles.leftContainer}>
-        <p onClick={navigateTo("/")}>CryptoBazar</p>
+        <p onClick={() => navigateTo("/")}>CryptoBazar</p>
         <div className={styles.linkBox}>
             <p className={styles.link} onClick={() => navigateTo('/shop')}>Shop</p>
             <p className={styles.link}>About</p>

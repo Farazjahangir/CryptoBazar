@@ -3,10 +3,12 @@
 .container {
     padding: 35px;
     display: flex;
+    margin-top: 60px;
 }
 
 .leftContainer {
     width: 180px;
+    position: relative;
 }
 
 .heading {
@@ -17,4 +19,14 @@
     background-color: $lightestGrey;
     flex: 1;
     padding: 20px;
+}
+
+@media only screen and (max-width: 740px) {
+    .container {
+        flex-direction: column;
+    }
+
+    .leftContainer {
+        width: 100%;
+    }
 }
