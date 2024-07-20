@@ -15,7 +15,7 @@ const NewArrivalSection = () => {
   return (
     <div className={styles.container}>
       <p className={styles.title}>New Arrival</p>
-      <h1>Discover the Latest Additions</h1>
+      <h1 className={styles.title2}>Discover the Latest Additions</h1>
       <div className={styles.box}>
         <Grid container spacing={2}>
           {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((i) => {
