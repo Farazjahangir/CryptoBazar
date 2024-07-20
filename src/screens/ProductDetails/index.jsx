@@ -28,7 +28,7 @@ const ProductDetails = () => {
   };
 
   return (
-    <Container>
+    <Container sx={{ marginTop: 10 }}>
       <Grid container spacing={2}>
         <Grid item sm={6} xs={12}>
           <img src={shoe} className={styles.image} />

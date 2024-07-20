@@ -10,12 +10,13 @@ const CustomerReviews = () => {
       <Grid container alignItems="center" spacing={3} sx={{ minHeight: 280 }}>
         <Grid
           item
-          sm={6}
-          xs={12}
+          sm={12}
+          md={6}
           sx={{
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
+            width: '100%'
           }}
         >
           <div className={styles.avgRatingBox}>
@@ -26,12 +27,13 @@ const CustomerReviews = () => {
         </Grid>
         <Grid
           item
-          sm={6}
-          xs={12}
+          sm={12}
+          md={6}
           sx={{
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
+            width: '100%'
           }}
         >
           {[1, 2, 3, 4, 5].map((item) => (
