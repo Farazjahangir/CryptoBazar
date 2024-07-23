@@ -31,7 +31,7 @@ const Header = () => {
         </div>
       </div>
       <div>
-        <img src={userIcon} className={styles.userIcon} />
+        <img src={userIcon} className={styles.userIcon} onClick={() => navigateTo('/profile')} />
         <img src={cartIcon} className={styles.cartIcon} onClick={toggleDrawer} />
       </div>
     </div>

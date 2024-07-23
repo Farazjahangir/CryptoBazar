@@ -1,11 +1,14 @@
+import clsx from "clsx"
+
 import styles from "./styles.module.scss"
 
 const Button = ({
     value,
-    onClick
+    onClick,
+    containerClass
 }) => {
     return (
-        <div className={styles.container} onClick={onClick}>
+        <div className={clsx(styles.container, containerClass)} onClick={onClick}>
             <p className={styles.text}>{value}</p>
         </div>
     )

@@ -3,7 +3,8 @@ const SCREEN_PATHS = {
   Login: "/login",
   Signup: "/signup",
   Shop: '/shop',
-  PRODUCT_DETAILS: '/product-details'
+  PRODUCT_DETAILS: '/product-details',
+  PROFILE: '/profile'
 };
 
 const SCREENS_CODES = {

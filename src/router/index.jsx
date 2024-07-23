@@ -20,6 +20,7 @@ import Login from "../screens/Login";
 import Signup from "../screens/Signup";
 import Shop from "../screens/Shop";
 import ProductDetails from "../screens/ProductDetails";
+import Profile from "../screens/Profile";
 
 import Header from "../Components/Header";
 import Footer from "../Components/Footer";
@@ -57,6 +58,14 @@ const Router = () => {
       element: (
         // <ProtectedRoute screenName={SCREENS_CODES.DASHBOARD}>
         <ProductDetails />
+        // </ProtectedRoute>
+      ),
+    },
+    {
+      path: SCREEN_PATHS.PROFILE,
+      element: (
+        // <ProtectedRoute screenName={SCREENS_CODES.DASHBOARD}>
+        <Profile />
         // </ProtectedRoute>
       ),
     },

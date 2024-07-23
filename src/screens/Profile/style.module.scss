@@ -1,0 +1,37 @@
+@import "../../constants/colors.scss";
+
+.container {
+  margin-top: 100px;
+  background-color: $lightestGrey;
+  border-radius: 10px;
+  padding-bottom: 20px;
+}
+.inputGroup {
+  display: flex;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.inputBox {
+  flex: 1;
+  padding-right: 18px;
+}
+.btnBox {
+    margin-top: 10px;
+    display: flex;
+    justify-content: flex-end;
+    padding-right: 18px;
+}
+
+.buttonContainer {
+    width: 200px;
+}
+
+@media only screen and (max-width: 500px) {
+  .inputGroup {
+    flex-direction: column;
+  }
+  .inputBox {
+    padding-right: 0;
+  }
+}
