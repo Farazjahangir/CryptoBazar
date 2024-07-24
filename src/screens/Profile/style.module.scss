@@ -2,10 +2,8 @@
 
 .container {
   margin-top: 100px;
-  background-color: $lightestGrey;
-  border-radius: 10px;
-  padding-bottom: 20px;
 }
+
 .inputGroup {
   display: flex;
   box-sizing: border-box;
@@ -16,6 +14,7 @@
   flex: 1;
   padding-right: 18px;
 }
+
 .btnBox {
     margin-top: 10px;
     display: flex;
@@ -25,6 +24,10 @@
 
 .buttonContainer {
     width: 200px;
+}
+
+.orderTableTitle {
+    margin-bottom: 15px;
 }
 
 @media only screen and (max-width: 500px) {
