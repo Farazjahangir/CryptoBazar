@@ -1,0 +1,49 @@
+@import "../../constants/colors.scss";
+
+.container {
+  margin-top: 60px;
+  background-color: $lightestGrey;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.group {
+  display: flex;
+  margin-top: 20px;
+  p {
+    font-size: 19px;
+  }
+  p:nth-child(2) {
+    margin-left: 10px;
+    width: 800px;
+  }
+  p:nth-child(1) {
+    width: 170px;
+  }
+}
+
+.dataGridBox {
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+
+@media only screen and (max-width: 750px) {
+  .group {
+    p:nth-child(1) {
+      width: 280px;
+    }
+  }
+}
+
+@media only screen and (max-width: 520px) {
+    .group {
+        flex-direction: column;
+        p:nth-child(2) {
+            margin-left: 0;
+            width: 100%;
+        }
+        p:nth-child(1) {
+            color: $headBoderLineColor;
+        }
+    }
+  }

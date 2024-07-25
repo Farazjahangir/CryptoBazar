@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 import { DataGrid as MUIDataGrid } from "@mui/x-data-grid";
 
-const DataGrid = ({ columns, rows, loading, onCellClick }) => {
+const DataGrid = ({ columns, rows, loading, onRowClick }) => {
   const [cols, setCols] = useState(columns || []);
 
   const putDefaultValues = () => {
@@ -22,7 +22,7 @@ const DataGrid = ({ columns, rows, loading, onCellClick }) => {
       loading={loading}
       columns={cols}
       rows={rows}
-      onCellClick={onCellClick}
+      onRowClick={onRowClick}
       getRowClassName={() => ("tableRow")}
       sx={{
         "& .tableRow": {

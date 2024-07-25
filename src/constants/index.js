@@ -4,7 +4,8 @@ const SCREEN_PATHS = {
   Signup: "/signup",
   Shop: '/shop',
   PRODUCT_DETAILS: '/product-details',
-  PROFILE: '/profile'
+  PROFILE: '/profile',
+  ORDER_DETAILS: '/order-details/:orderId'
 };
 
 const SCREENS_CODES = {

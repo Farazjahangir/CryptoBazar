@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Grid, Container, Box } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 import DataGrid from "../../Components/DataGrid";
 import Button from "../../Components/Button";
@@ -66,6 +67,8 @@ const Profile = () => {
   ];
   const [file, setFile] = useState(null);
 
+  const navigate = useNavigate()
+
   const onDropFile = (file) => {
     const image = URL.createObjectURL(file[0]);
     setFile(image);
@@ -74,6 +77,10 @@ const Profile = () => {
   const onDropRejectedError = (err) => {
     console.log("ERR", err);
   };
+
+  const onRowClick = (row) => {
+    navigate(`/order-details/${row.row.id}`)
+  }
 
   return (
     <Container className={styles.container}>
@@ -128,7 +135,7 @@ const Profile = () => {
       </Box>
       <Box sx={{ marginTop: 7, marginBottom: 7 }}>
         <h2 className={styles.orderTableTitle}>Order History</h2>
-        <DataGrid columns={columns} rows={data} />
+        <DataGrid columns={columns} rows={data} onRowClick={onRowClick} />
       </Box>
     </Container>
   );
