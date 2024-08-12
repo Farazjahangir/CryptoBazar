@@ -12,6 +12,7 @@ import {
   SCREEN_PATHS,
   SCREENS_CODES,
   ROUTES_WITHOUT_HEADER,
+  ADMIN_ROUTES,
 } from "../constants";
 import { getRandomInt } from "../utils/globalHelpers";
 // Screens
@@ -22,10 +23,13 @@ import Shop from "../screens/Shop";
 import ProductDetails from "../screens/ProductDetails";
 import Profile from "../screens/Profile";
 import OrderDetails from "../screens/OrderDetails";
+import AdminDashboard from "../screens/AdminDashboard";
 
 import Header from "../Components/Header";
 import Footer from "../Components/Footer";
 import CartDrawer from "../Components/CartDrawer";
+import AdminHeader from "../Components/AdminHeader";
+import AdminDrawer from "../Components/AdminDrawer";
 
 const Router = () => {
   const [drawerState, setDrawerState] = useState(false);
@@ -78,35 +82,68 @@ const Router = () => {
         // </ProtectedRoute>
       ),
     },
+    {
+      path: SCREEN_PATHS.ADM_DASHBOARD,
+      element: (
+        // <ProtectedRoute screenName={SCREENS_CODES.DASHBOARD}>
+        <AdminDashboard />
+        // </ProtectedRoute>
+      ),
+    },
   ]);
 
   const location = useLocation();
 
   return (
+    // <div style={{ display: 'flex' }}>
     <div
-      style={{ minHeight: "100vh", display: "flex", flexDirection: "column" }}
+      style={{
+        minHeight: "100vh",
+        ...(location.pathname.startsWith("/admin")
+          ? { display: "flex", flexDirection: "row" }
+          : {}),
+      }}
     >
       {!ROUTES_WITHOUT_HEADER.includes(location.pathname) && (
         <CartDrawer open={drawerState} />
       )}
-      {!ROUTES_WITHOUT_HEADER.includes(location.pathname) && <Header />}
-      <div style={{ flex: 1 }}>
-        <Routes>
-          {router.routes.map((item) => (
-            <Route
-              path={item.path}
-              element={item.element}
-              key={getRandomInt(1000000, 100000000)}
-            />
-          ))}
-        </Routes>
-      </div>
-      {!ROUTES_WITHOUT_HEADER.includes(location.pathname) && (
-        <div>
-          <Footer />
-        </div>
+
+      {ADMIN_ROUTES.includes(location.pathname) && (
+        <>
+          <AdminDrawer />
+        </>
       )}
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          width: "100%",
+          ...(location.pathname.startsWith("/admin")
+            ? { backgroundColor: '#e2e7e84d' }
+            : {}),
+        }}
+      >
+        {!ROUTES_WITHOUT_HEADER.includes(location.pathname) && <Header />}
+        {ADMIN_ROUTES.includes(location.pathname) && <AdminHeader />}
+        <div style={{ flex: 1 }}>
+          <Routes>
+            {router.routes.map((item) => (
+              <Route
+                path={item.path}
+                element={item.element}
+                key={getRandomInt(1000000, 100000000)}
+              />
+            ))}
+          </Routes>
+        </div>
+        {!ROUTES_WITHOUT_HEADER.includes(location.pathname) && (
+          <div>
+            <Footer />
+          </div>
+        )}
+      </div>
     </div>
+    // </div>
   );
 };
 

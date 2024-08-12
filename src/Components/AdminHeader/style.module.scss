@@ -1,0 +1,22 @@
+@import "../../constants/colors.scss";
+
+.container {
+    margin-top: 20px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.box {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.profilePic {
+    width: 40px;
+    height: 40px;
+    background-image: url(/src/assets/images/dummyDp.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    border-radius: 20px;
+}

@@ -7,12 +7,13 @@ import paymentIcon from "../../assets/icons/payment.png";
 import ServiceBox from "./ServiceBox";
 import NewArrivalSection from "./NewArrivalSection";
 import styles from "./style.module.scss";
+import { Box } from "@mui/system";
 
 const Home = () => {
   return (
     <div className={styles.container}>
       {/* <Header /> */}
-      <Slider />
+      {/* <Slider /> */}
       <h1 className={styles.head1}>Why Choose Us</h1>
       <div className={styles.borderLine} />
       <div className={styles.servicesBox}>

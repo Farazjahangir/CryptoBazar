@@ -5,7 +5,8 @@ const SCREEN_PATHS = {
   Shop: '/shop',
   PRODUCT_DETAILS: '/product-details',
   PROFILE: '/profile',
-  ORDER_DETAILS: '/order-details/:orderId'
+  ORDER_DETAILS: '/order-details/:orderId',
+  ADM_DASHBOARD: '/admin/dashboard'
 };
 
 const SCREENS_CODES = {
@@ -13,10 +14,12 @@ const SCREENS_CODES = {
     LOGIN: 'login',
 };
 
-const ROUTES_WITHOUT_HEADER = ["/login", "/signup"]
+const ROUTES_WITHOUT_HEADER = ["/login", "/signup", '/admin/dashboard']
+const ADMIN_ROUTES = ['/admin/dashboard']
 
 export {
     SCREENS_CODES,
     SCREEN_PATHS,
-    ROUTES_WITHOUT_HEADER
+    ROUTES_WITHOUT_HEADER,
+    ADMIN_ROUTES
 }

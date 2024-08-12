@@ -1,12 +1,28 @@
 import { Drawer as MUIDrawer } from "@mui/material";
 
-const Drawer = ({ anchor = "right", open, onClose = () => {}, children, minWidth=250 }) => {
+const Drawer = ({
+  anchor = "right",
+  open,
+  onClose = () => {},
+  children,
+  minWidth = 250,
+  variant,
+}) => {
   return (
     <MUIDrawer
       anchor={anchor}
       open={open}
       onClose={onClose}
       PaperProps={{ sx: { minWidth: minWidth } }}
+      variant={variant}
+      sx={{
+        width: minWidth,
+        flexShrink: 0,
+        "& .MuiDrawer-paper": {
+          width: minWidth,
+          boxSizing: "border-box",
+        },
+      }}
     >
       {children}
     </MUIDrawer>
