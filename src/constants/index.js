@@ -1,3 +1,8 @@
+const ADMIN_SCREEN_PATH = {
+  ADM_DASHBOARD: '/admin/dashboard',
+  ADM_PRD_LIST: '/admin/product/list'
+}
+
 const SCREEN_PATHS = {
   HOME: "/",
   Login: "/login",
@@ -6,7 +11,7 @@ const SCREEN_PATHS = {
   PRODUCT_DETAILS: '/product-details',
   PROFILE: '/profile',
   ORDER_DETAILS: '/order-details/:orderId',
-  ADM_DASHBOARD: '/admin/dashboard'
+  ...ADMIN_SCREEN_PATH
 };
 
 const SCREENS_CODES = {
@@ -14,17 +19,20 @@ const SCREENS_CODES = {
     LOGIN: 'login',
 };
 
-const ROUTES_WITHOUT_HEADER = ["/login", "/signup", '/admin/dashboard']
-const ADMIN_ROUTES = ['/admin/dashboard']
+
+const ROUTES_WITHOUT_HEADER = ["/login", "/signup", ...Object.values(ADMIN_SCREEN_PATH)];
+// const ROUTES_WITHOUT_HEADER = ["/login", "/signup", '/admin/dashboard']
+const ADMIN_ROUTES = ['/admin/dashboard', '/admin/product/list']
 
 const DRAWER_ROUTES = [
   {
     name: "Dashboard",
-    key: 'dash'
+    key: 'dashboard',
+    path: '/admin/dashboard'
   },
   {
     name: "Categories",
-    key: 'cat',
+    key: 'category',
     subMenu: [
       {
         name: "List",
@@ -38,11 +46,12 @@ const DRAWER_ROUTES = [
   },
   {
     name: "Products",
-    key: 'prd',
+    key: 'product',
     subMenu: [
       {
         name: "List",
         key: 'p-list',
+        path: '/admin/product/list'
       },
       {
         name: "Create",

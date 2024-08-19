@@ -24,6 +24,7 @@ import ProductDetails from "../screens/ProductDetails";
 import Profile from "../screens/Profile";
 import OrderDetails from "../screens/OrderDetails";
 import AdminDashboard from "../screens/AdminDashboard";
+import AdminPrdList from "../screens/AdminPrdList";
 
 import Header from "../Components/Header";
 import Footer from "../Components/Footer";
@@ -87,6 +88,14 @@ const Router = () => {
       element: (
         // <ProtectedRoute screenName={SCREENS_CODES.DASHBOARD}>
         <AdminDashboard />
+        // </ProtectedRoute>
+      ),
+    },
+    {
+      path: SCREEN_PATHS.ADM_PRD_LIST,
+      element: (
+        // <ProtectedRoute screenName={SCREENS_CODES.DASHBOARD}>
+        <AdminPrdList />
         // </ProtectedRoute>
       ),
     },

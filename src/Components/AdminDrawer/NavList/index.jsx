@@ -7,41 +7,51 @@ import {
   Collapse,
 } from "@mui/material";
 import { ExpandLess, ExpandMore } from "@mui/icons-material";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 import { DRAWER_ROUTES } from "../../../constants";
 import styles from "./style.module.scss";
 import { fontSize } from "@mui/system";
 
 const listItemBtnStyle = {
-    marginTop: 1,
-    padding: 0,
-    "&:hover": {
-      background: "none",
-    },
-}
+  marginTop: 1,
+  padding: 0,
+  "&:hover": {
+    background: "none",
+  },
+};
 
 const NavList = () => {
-  const [open, setOpen] = useState(false);
   const [activeKey, setActiveKey] = useState(null);
 
-  const location = useLocation()
+  const location = useLocation();
+  const pathnameArray = location.pathname.split("/");
+  const navigate = useNavigate();
+
+  const navigateTo = (path) => {
+    navigate(path);
+  };
+
   const onExpand = (route) => {
     if (activeKey === route.key) {
-        setActiveKey(null)
-        return;
+      setActiveKey(null);
+      return;
     }
-    setActiveKey(route.key)
-  }
+    navigateTo(route.subMenu[0].path);
+    setActiveKey(route.key);
+  };
+
+  const onRouteClick = (route) => {
+    setActiveKey(route.key);
+    navigateTo(route.path);
+  };
 
   const renderNormalList = (route) => (
-    <ListItemButton
-      sx={listItemBtnStyle}
-    >
+    <ListItemButton sx={listItemBtnStyle} onClick={() => onRouteClick(route)}>
       <ListItemText
         primary={route.name}
         primaryTypographyProps={{
-          color: "black",
+          color: pathnameArray.at(-1) === route.key ? "#ff6348" : 'black',
         }}
       />
     </ListItemButton>
@@ -50,17 +60,14 @@ const NavList = () => {
   const renderCollapseList = (route) => {
     return (
       <>
-        <ListItemButton
-          sx={listItemBtnStyle}
-          onClick={() => onExpand(route)}
-        >
+        <ListItemButton sx={listItemBtnStyle} onClick={() => onExpand(route)}>
           <ListItemText
             primary={route.name}
             primaryTypographyProps={{
-              color: "black",
+              color: pathnameArray.at(-2) === route.key ? "#ff6348" : 'black',
             }}
           />
-          {activeKey === route.key  ? <ExpandLess /> : <ExpandMore />}
+          {activeKey === route.key ? <ExpandLess /> : <ExpandMore />}
         </ListItemButton>
         {route.subMenu.map((subMenu) => {
           return (
@@ -75,7 +82,13 @@ const NavList = () => {
                     },
                   }}
                 >
-                  <ListItemText primary={subMenu.name} />
+                  <ListItemText
+                    primary={subMenu.name}
+                    primaryTypographyProps={{
+                      color:
+                        subMenu.key.includes(pathnameArray.at(-1)) ? "#ff6348" : 'black',
+                    }}
+                  />
                 </ListItemButton>
               </List>
             </Collapse>
