@@ -127,14 +127,22 @@ const Router = () => {
           display: "flex",
           flexDirection: "column",
           width: "100%",
+          overflowX: 'hidden',
           ...(location.pathname.startsWith("/admin")
-            ? { backgroundColor: '#e2e7e84d' }
+            ? { backgroundColor: "#e2e7e84d" }
             : {}),
         }}
       >
         {!ROUTES_WITHOUT_HEADER.includes(location.pathname) && <Header />}
         {ADMIN_ROUTES.includes(location.pathname) && <AdminHeader />}
-        <div style={{ flex: 1 }}>
+        <div
+          style={{
+            flex: 1,
+            ...(location.pathname.startsWith("/admin")
+              ? { paddingLeft: 30, paddingRight: 30 }
+              : {}),
+          }}
+        >
           <Routes>
             {router.routes.map((item) => (
               <Route
