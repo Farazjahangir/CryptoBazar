@@ -7,6 +7,7 @@ const Drawer = ({
   children,
   minWidth = 250,
   variant,
+  sx
 }) => {
   return (
     <MUIDrawer
@@ -22,6 +23,7 @@ const Drawer = ({
           width: minWidth,
           boxSizing: "border-box",
         },
+        ...sx
       }}
     >
       {children}

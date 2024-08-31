@@ -31,9 +31,11 @@ import Footer from "../Components/Footer";
 import CartDrawer from "../Components/CartDrawer";
 import AdminHeader from "../Components/AdminHeader";
 import AdminDrawer from "../Components/AdminDrawer";
+import { Box } from "@mui/system";
 
 const Router = () => {
   const [drawerState, setDrawerState] = useState(false);
+  const [adminDrawerState, setAdminDrawerState] = useState(false)
   const router = createBrowserRouter([
     {
       path: SCREEN_PATHS.Login,
@@ -103,6 +105,14 @@ const Router = () => {
 
   const location = useLocation();
 
+  const toggleAdminDrawer = () => {
+    setAdminDrawerState(!adminDrawerState)
+  }
+
+  const onAdminDrawerClose = () => {
+    setAdminDrawerState(false)
+  }
+
   return (
     // <div style={{ display: 'flex' }}>
     <div
@@ -118,9 +128,9 @@ const Router = () => {
       )}
 
       {ADMIN_ROUTES.includes(location.pathname) && (
-        <>
-          <AdminDrawer />
-        </>
+        <Box sx={{ background: '#e2e7e84d' }}>
+          <AdminDrawer open={adminDrawerState} onClose={onAdminDrawerClose} />
+        </Box>
       )}
       <div
         style={{
@@ -134,7 +144,7 @@ const Router = () => {
         }}
       >
         {!ROUTES_WITHOUT_HEADER.includes(location.pathname) && <Header />}
-        {ADMIN_ROUTES.includes(location.pathname) && <AdminHeader />}
+        {ADMIN_ROUTES.includes(location.pathname) && <AdminHeader toggleDrawer={toggleAdminDrawer} />}
         <div
           style={{
             flex: 1,
