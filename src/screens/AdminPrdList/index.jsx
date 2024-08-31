@@ -1,7 +1,7 @@
 import { Box } from "@mui/system";
 
 import Button from "../../Components/Button";
-import DataGrid from "../../Components/DataGrid";
+import AdminDataGrid from "../../Components/AdminDataGrid";
 import Select from "../../Components/Select";
 import styles from "./style.module.scss";
 
@@ -88,7 +88,7 @@ const AdminPrdList = () => {
           </Box>
         </Box> */}
       </Box>
-      <DataGrid columns={columns} rows={data} />
+      <AdminDataGrid columns={columns} rows={data} />
     </div>
   );
 };
