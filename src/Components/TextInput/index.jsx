@@ -10,6 +10,11 @@ const TextInput = ({
   required= false,
   value
 }) => {
+  
+  const handleChange = (e) => {
+    onChange(e, e.target.value)
+  }
+
   return (
     <TextField
       variant={variant}
@@ -17,7 +22,7 @@ const TextInput = ({
       label={label}
       type={type}
       margin={margin}
-      onChange={onChange}
+      onChange={handleChange}
       required={required}
       value={value}
     />
