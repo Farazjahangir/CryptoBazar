@@ -1,6 +1,7 @@
 const ADMIN_SCREEN_PATH = {
   ADM_DASHBOARD: '/admin/dashboard',
-  ADM_PRD_LIST: '/admin/product/list'
+  ADM_PRD_LIST: '/admin/product/list',
+  ADM_CAT_LIST: '/admin/category/list'
 }
 
 const SCREEN_PATHS = {
@@ -22,7 +23,7 @@ const SCREENS_CODES = {
 
 const ROUTES_WITHOUT_HEADER = ["/login", "/signup", ...Object.values(ADMIN_SCREEN_PATH)];
 // const ROUTES_WITHOUT_HEADER = ["/login", "/signup", '/admin/dashboard']
-const ADMIN_ROUTES = ['/admin/dashboard', '/admin/product/list']
+const ADMIN_ROUTES = Object.values(ADMIN_SCREEN_PATH)
 
 const DRAWER_ROUTES = [
   {
@@ -37,6 +38,7 @@ const DRAWER_ROUTES = [
       {
         name: "List",
         key: 'c-list',
+        path: '/admin/category/list'
       },
       {
         name: "Create",

@@ -4,14 +4,28 @@ import { Box } from "@mui/system";
 
 import Button from "../Button";
 
-const AdminDataGrid = ({ columns, rows, loading, onRowClick, onRowSelect, onEdit, onDelete }) => {
+const AdminDataGrid = ({
+  columns,
+  rows,
+  loading,
+  onRowClick,
+  onRowSelect,
+  onEdit,
+  onDelete,
+}) => {
   const [cols, setCols] = useState(columns || []);
 
   const putDefaultValues = () => {
-    const updatedCols = cols.map((item) => ({
-      ...item,
-      flex: 1,
-    }));
+    const updatedCols = cols.map((item) => {
+      if (item.noFlex) {
+        return item;
+      }
+      return {
+        ...item,
+        flex: 1,
+      };
+    });
+    console.log("updatedCols", updatedCols)
     setCols(updatedCols);
   };
 
@@ -20,8 +34,8 @@ const AdminDataGrid = ({ columns, rows, loading, onRowClick, onRowSelect, onEdit
   }, [columns]);
 
   return (
-    <Box sx={{ height: "100%", border: '' }}>
-      <Box sx={{ backgroundColor: '#ffffff', borderRadius: 2 }} padding={2}>
+    <Box sx={{ height: "100%", border: "" }}>
+      <Box sx={{ backgroundColor: "#ffffff", borderRadius: 2 }} padding={2}>
         <Box display="flex">
           <Box width={100} mr={2}>
             <Button value="Edit" onClick={onEdit} />
@@ -37,6 +51,7 @@ const AdminDataGrid = ({ columns, rows, loading, onRowClick, onRowSelect, onEdit
         rows={rows}
         onRowClick={onRowClick}
         getRowClassName={() => "tableRow"}
+        getRowHeight={() => 'auto'}
         disableColumnResize={true}
         disableRowSelectionOnClick
         checkboxSelection
@@ -47,7 +62,7 @@ const AdminDataGrid = ({ columns, rows, loading, onRowClick, onRowSelect, onEdit
           onRowSelect?.(rows);
         }}
         sx={{
-          border: 'none',
+          border: "none",
           flexGrow: 1,
           backgroundColor: "#ffffff",
           "& .tableRow": {
