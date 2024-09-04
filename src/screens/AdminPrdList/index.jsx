@@ -1,8 +1,10 @@
-import { Box } from "@mui/system";
+import { Box, display } from "@mui/system";
+import { Avatar } from "@mui/material";
 
 import Button from "../../Components/Button";
 import AdminDataGrid from "../../Components/AdminDataGrid";
 import Select from "../../Components/Select";
+import shoe from "../../assets/images/shoe.jpg";
 import styles from "./style.module.scss";
 
 const AdminPrdList = () => {
@@ -10,8 +12,33 @@ const AdminPrdList = () => {
     {
       field: "name",
       headerName: "Name",
+      minWidth: 180,
+      flex: 1,
+      display: "flex",
+      renderCell: (param) => (
+        <Box display="flex" alignItems="center" p={1}>
+          <Avatar
+            src={param.row.image}
+            sx={{ width: 54, height: 54, marginRight: 2 }}
+            variant="square"
+          />
+          <p>{param.row.name}</p>
+        </Box>
+      ),
+    },
+    {
+      field: "cat",
+      headerName: "Category",
       minWidth: 100,
       flex: 1,
+      display: "flex",
+    },
+    {
+      field: "subCat",
+      headerName: "Sub Category",
+      minWidth: 100,
+      flex: 1,
+      display: "flex",
     },
     {
       field: "price",
@@ -19,6 +46,7 @@ const AdminPrdList = () => {
       type: "number",
       minWidth: 100,
       flex: 1,
+      display: "flex",
     },
     {
       field: "stock",
@@ -26,6 +54,16 @@ const AdminPrdList = () => {
       type: "number",
       minWidth: 100,
       flex: 1,
+      display: "flex",
+    },
+    
+    {
+      field: "qty",
+      headerName: "Quantity",
+      type: "number",
+      minWidth: 100,
+      flex: 1,
+      display: "flex",
     },
   ];
 
@@ -35,18 +73,30 @@ const AdminPrdList = () => {
       name: "Shoe",
       price: 100,
       stock: 3,
+      image: shoe,
+      qty: 2,
+      cat: 'Footwear',
+      subCat: 'casual'
     },
     {
       id: 2,
       name: "Shoe",
       price: 100,
       stock: 1,
+      image: shoe,
+      qty: 2,
+      cat: 'Footwear',
+      subCat: 'casual'
     },
     {
       id: 3,
       name: "Shoe",
       price: 250,
       stock: 5,
+      image: shoe,
+      qty: 2,
+      cat: 'Footwear',
+      subCat: 'casual'
     },
   ];
 
