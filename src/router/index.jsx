@@ -26,6 +26,7 @@ import OrderDetails from "../screens/OrderDetails";
 import AdminDashboard from "../screens/AdminDashboard";
 import AdminPrdList from "../screens/AdminPrdList";
 import AdminCatList from "../screens/AdminCatList";
+import AdminOrderList from "../screens/AdminOrderList";
 
 import Header from "../Components/Header";
 import Footer from "../Components/Footer";
@@ -107,6 +108,14 @@ const Router = () => {
       element: (
         // <ProtectedRoute screenName={SCREENS_CODES.DASHBOARD}>
         <AdminCatList />
+        // </ProtectedRoute>
+      ),
+    },
+    {
+      path: SCREEN_PATHS.ADM_ORDER_LIST,
+      element: (
+        // <ProtectedRoute screenName={SCREENS_CODES.DASHBOARD}>
+        <AdminOrderList />
         // </ProtectedRoute>
       ),
     },

@@ -12,6 +12,7 @@ const AdminDataGrid = ({
   onRowSelect,
   onEdit,
   onDelete,
+  checkboxSelection= true
 }) => {
   const [cols, setCols] = useState(columns || []);
 
@@ -25,7 +26,6 @@ const AdminDataGrid = ({
         flex: 1,
       };
     });
-    console.log("updatedCols", updatedCols)
     setCols(updatedCols);
   };
 
@@ -51,10 +51,10 @@ const AdminDataGrid = ({
         rows={rows}
         onRowClick={onRowClick}
         getRowClassName={() => "tableRow"}
-        getRowHeight={() => 'auto'}
+        getRowHeight={(a) => 'auto'}
         disableColumnResize={true}
         disableRowSelectionOnClick
-        checkboxSelection
+        checkboxSelection={checkboxSelection}
         onRowSelectionModelChange={(selectedRowIds, details) => {
           const rows = selectedRowIds.map((item) => {
             return details.api.getRow(item);

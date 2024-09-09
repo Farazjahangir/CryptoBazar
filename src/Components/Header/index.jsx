@@ -12,7 +12,6 @@ const Header = () => {
   const navigate = useNavigate()
 
   const navigateTo = (path) => {
-    console.log("skjdlksajdlksajdl")
     navigate(path)
   }
 
