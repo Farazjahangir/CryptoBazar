@@ -2,7 +2,8 @@ const ADMIN_SCREEN_PATH = {
   ADM_DASHBOARD: '/admin/dashboard',
   ADM_PRD_LIST: '/admin/product/list',
   ADM_CAT_LIST: '/admin/category/list',
-  ADM_ORDER_LIST: '/admin/order/list'
+  ADM_ORDER_LIST: '/admin/order/list',
+  ADM_ADD_PRD: '/admin/product/create',
 }
 
 const SCREEN_PATHS = {
@@ -59,6 +60,7 @@ const DRAWER_ROUTES = [
       {
         name: "Create",
         key: 'p-create',
+        path: '/admin/product/create'
       },
     ]
   },
@@ -79,10 +81,13 @@ const DRAWER_ROUTES = [
   },
 ]
 
+const SIZES = ["SM", "MD", "LG", "XL"]
+
 export {
     SCREENS_CODES,
     SCREEN_PATHS,
     ROUTES_WITHOUT_HEADER,
     ADMIN_ROUTES,
-    DRAWER_ROUTES
+    DRAWER_ROUTES,
+    SIZES
 }

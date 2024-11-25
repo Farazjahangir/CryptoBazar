@@ -11,6 +11,8 @@ const Select = ({
   value,
   size = "small",
   hasAll = true,
+  variant='outlined',
+  sx={}
 }) => {
   return (
     <FormControl fullWidth size={size}>
@@ -19,8 +21,8 @@ const Select = ({
         value={value || 'all'}
         label={label}
         onChange={handleChange}
-        //   placeholder="Please Select"
-        sx={{ backgroundColor: "#ffffff" }}
+        sx={{ backgroundColor: "#ffffff", ...sx }}
+        variant={variant}
       >
         {hasAll && (
           <MenuItem value="all">

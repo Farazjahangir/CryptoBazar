@@ -1,0 +1,16 @@
+@import "../../constants/colors.scss";
+
+.container {
+  width: 100%;
+  border: 1px solid $lightestGrey;
+  min-height: 160px;
+  background-color: $lightestGrey;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  cursor: pointer;
+}
+
+.text {
+  color: $black;
+}

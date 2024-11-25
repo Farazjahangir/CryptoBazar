@@ -43,15 +43,20 @@ const NavList = () => {
 
   const onRouteClick = (route) => {
     setActiveKey(route.key);
-    navigateTo(route.path);
   };
+
+  const onSubmenuClick = (path) => {
+    navigateTo(path);
+  };
+
+  console.log("ACTIVE", activeKey);
 
   const renderNormalList = (route) => (
     <ListItemButton sx={listItemBtnStyle} onClick={() => onRouteClick(route)}>
       <ListItemText
         primary={route.name}
         primaryTypographyProps={{
-          color: pathnameArray.at(-1) === route.key ? "#ff6348" : 'black',
+          color: pathnameArray.at(-1) === route.key ? "#ff6348" : "black",
         }}
       />
     </ListItemButton>
@@ -64,7 +69,7 @@ const NavList = () => {
           <ListItemText
             primary={route.name}
             primaryTypographyProps={{
-              color: pathnameArray.at(-2) === route.key ? "#ff6348" : 'black',
+              color: pathnameArray.at(-2) === route.key ? "#ff6348" : "black",
             }}
           />
           {activeKey === route.key ? <ExpandLess /> : <ExpandMore />}
@@ -81,12 +86,14 @@ const NavList = () => {
                       background: "none",
                     },
                   }}
+                  onClick={() => onSubmenuClick(subMenu.path)}
                 >
                   <ListItemText
                     primary={subMenu.name}
                     primaryTypographyProps={{
-                      color:
-                        subMenu.key.includes(pathnameArray.at(-1)) ? "#ff6348" : 'black',
+                      color: subMenu.key.includes(pathnameArray.at(-1))
+                        ? "#ff6348"
+                        : "black",
                     }}
                   />
                 </ListItemButton>

@@ -1,0 +1,17 @@
+@import "../../constants/colors.scss";
+
+.input {
+  border: none;
+  width: 30px; /* Width of the color picker */
+  height: 30px; /* Height of the color picker */
+  border-radius: 50%; /* Makes the input round */
+  padding: 0;
+  cursor: pointer; /* Makes it look clickable */
+  &::-webkit-color-swatch-wrapper {
+    padding: 0;
+  }
+  &::-webkit-color-swatch {
+    border: none;
+    border-radius: 50%; /* Also make the color swatch round */
+  }
+}

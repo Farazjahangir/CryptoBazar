@@ -1,5 +1,8 @@
 import { TextField } from "@mui/material";
 
+import styles from "./style.module.scss"
+
+
 const TextInput = ({
   variant = "standard",
   label,
@@ -8,7 +11,9 @@ const TextInput = ({
   margin = "dense",
   onChange,
   required= false,
-  value
+  value,
+  size='small',
+  sx
 }) => {
   
   const handleChange = (e) => {
@@ -25,6 +30,11 @@ const TextInput = ({
       onChange={handleChange}
       required={required}
       value={value}
+      classes={{
+        MuiTextFieldRoot: styles.input,
+      }}
+      size={size}
+      sx={sx}
     />
   );
 };
