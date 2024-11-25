@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Box, display } from "@mui/system";
-import { Avatar } from "@mui/material";
+import { Avatar, Tooltip } from "@mui/material";
+import { Delete, Edit } from "@mui/icons-material";
 
 import Button from "../../Components/Button";
 import AdminDataGrid from "../../Components/AdminDataGrid";
@@ -10,17 +11,17 @@ import AdminProductForm from "./AdminProductForm";
 import styles from "./style.module.scss";
 
 const AdminPrdList = () => {
-  const [productFormShow, setProductFormShow] = useState(false)
+  const [productFormShow, setProductFormShow] = useState(false);
 
   const toggleProductForm = () => {
-    setProductFormShow(!productFormShow)
-  }
+    setProductFormShow(!productFormShow);
+  };
 
   const renderTableHeader = () => (
     <Box width={180}>
       <Button value="Add Product" onClick={toggleProductForm} />
     </Box>
-  )
+  );
 
   const columns = [
     {
@@ -70,7 +71,7 @@ const AdminPrdList = () => {
       flex: 1,
       display: "flex",
     },
-    
+
     {
       field: "qty",
       headerName: "Quantity",
@@ -78,6 +79,23 @@ const AdminPrdList = () => {
       minWidth: 100,
       flex: 1,
       display: "flex",
+    },
+    {
+      field: "actions",
+      headerName: "Actions",
+      minWidth: 120,
+      flex: 1,
+      display: "flex",
+      renderCell: (param) => (
+        <Box display="flex" alignItems="center" p={1} justifyContent='space-evenly' flex={1}>
+          <Tooltip title="Edit">
+            <Edit onClick={() => console.log("pressed")} />
+          </Tooltip>
+          <Tooltip title="Delete">
+            <Delete />
+          </Tooltip>
+        </Box>
+      ),
     },
   ];
 
@@ -89,8 +107,8 @@ const AdminPrdList = () => {
       stock: 3,
       image: shoe,
       qty: 2,
-      cat: 'Footwear',
-      subCat: 'casual'
+      cat: "Footwear",
+      subCat: "casual",
     },
     {
       id: 2,
@@ -99,8 +117,8 @@ const AdminPrdList = () => {
       stock: 1,
       image: shoe,
       qty: 2,
-      cat: 'Footwear',
-      subCat: 'casual'
+      cat: "Footwear",
+      subCat: "casual",
     },
     {
       id: 3,
@@ -109,8 +127,8 @@ const AdminPrdList = () => {
       stock: 5,
       image: shoe,
       qty: 2,
-      cat: 'Footwear',
-      subCat: 'casual'
+      cat: "Footwear",
+      subCat: "casual",
     },
   ];
 
@@ -153,7 +171,11 @@ const AdminPrdList = () => {
           </Box>
         </Box> */}
       </Box>
-      <AdminDataGrid columns={columns} rows={data} renderHeader={renderTableHeader} />
+      <AdminDataGrid
+        columns={columns}
+        rows={data}
+        renderHeader={renderTableHeader}
+      />
     </div>
   );
 };

@@ -12,7 +12,7 @@ const AdminDataGrid = ({
   onRowSelect,
   onEdit,
   onDelete,
-  checkboxSelection= true,
+  checkboxSelection= false,
   renderHeader
 }) => {
   const [cols, setCols] = useState(columns || []);
@@ -53,6 +53,7 @@ const AdminDataGrid = ({
         rows={rows}
         onRowClick={onRowClick}
         getRowClassName={() => "tableRow"}
+        getCellClassName={() => "tableCell"}
         getRowHeight={(a) => 'auto'}
         disableColumnResize={true}
         disableRowSelectionOnClick
@@ -71,16 +72,13 @@ const AdminDataGrid = ({
             fontSize: 15,
             backgroundColor: "#ffffff",
             "&:hover": {
-              backgroundColor: "#ff7a63",
-              color: "#ffffff",
+              backgroundColor: "#e2e7e84d",
               cursor: "pointer",
             },
             "&.Mui-selected": {
-              backgroundColor: "#ff7a63",
-              color: "#ffffff",
+              backgroundColor: "#e2e7e84d",
               "&:hover": {
-                backgroundColor: "#ff7a63",
-                color: "#ffffff",
+                backgroundColor: "#e2e7e84d",
               },
             },
           },
