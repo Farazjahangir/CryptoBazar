@@ -1,0 +1,16 @@
+@import "../../../constants/colors.scss";
+
+.image {
+  background-size: contain;
+  width: 100%;
+  height: 100%;
+  background-repeat: no-repeat;
+  background-position: center;
+  max-height: 200px;
+}
+.title {
+  font-size: 20px;
+}
+.closeIcon {
+  cursor: pointer;
+}
