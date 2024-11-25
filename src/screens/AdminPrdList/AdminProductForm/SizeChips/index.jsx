@@ -1,5 +1,5 @@
 import { borderRadius, fontSize, width } from "@mui/system"
-import Chip from "../../../Components/Chip"
+import Chip from "../../../../Components/Chip"
 
 const SizeChips = ({ label, selected, onClick }) => {
     return (

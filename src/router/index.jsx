@@ -27,7 +27,6 @@ import AdminDashboard from "../screens/AdminDashboard";
 import AdminPrdList from "../screens/AdminPrdList";
 import AdminCatList from "../screens/AdminCatList";
 import AdminOrderList from "../screens/AdminOrderList";
-import AdminAddProduct from "../screens/AdminAddProduct";
 
 import Header from "../Components/Header";
 import Footer from "../Components/Footer";
@@ -119,15 +118,7 @@ const Router = () => {
         <AdminOrderList />
         // </ProtectedRoute>
       ),
-    },
-    {
-      path: SCREEN_PATHS.ADM_ADD_PRD,
-      element: (
-        // <ProtectedRoute screenName={SCREENS_CODES.DASHBOARD}>
-        <AdminAddProduct />
-        // </ProtectedRoute>
-      ),
-    },
+    }
   ]);
 
   const location = useLocation();

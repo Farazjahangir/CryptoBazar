@@ -3,7 +3,6 @@ const ADMIN_SCREEN_PATH = {
   ADM_PRD_LIST: '/admin/product/list',
   ADM_CAT_LIST: '/admin/category/list',
   ADM_ORDER_LIST: '/admin/order/list',
-  ADM_ADD_PRD: '/admin/product/create',
 }
 
 const SCREEN_PATHS = {
@@ -60,7 +59,6 @@ const DRAWER_ROUTES = [
       {
         name: "Create",
         key: 'p-create',
-        path: '/admin/product/create'
       },
     ]
   },

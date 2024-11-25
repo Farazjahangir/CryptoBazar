@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Box, display } from "@mui/system";
 import { Avatar } from "@mui/material";
 
@@ -5,9 +6,22 @@ import Button from "../../Components/Button";
 import AdminDataGrid from "../../Components/AdminDataGrid";
 import Select from "../../Components/Select";
 import shoe from "../../assets/images/shoe.jpg";
+import AdminProductForm from "./AdminProductForm";
 import styles from "./style.module.scss";
 
 const AdminPrdList = () => {
+  const [productFormShow, setProductFormShow] = useState(false)
+
+  const toggleProductForm = () => {
+    setProductFormShow(!productFormShow)
+  }
+
+  const renderTableHeader = () => (
+    <Box width={180}>
+      <Button value="Add Product" onClick={toggleProductForm} />
+    </Box>
+  )
+
   const columns = [
     {
       field: "name",
@@ -102,6 +116,7 @@ const AdminPrdList = () => {
 
   return (
     <div className={styles.container}>
+      <AdminProductForm open={productFormShow} onClose={toggleProductForm} />
       <h2>Filters</h2>
       <Box maxWidth="800px" mb={4} mt={3}>
         <Box display="flex" mt={1} width="100%">
@@ -138,7 +153,7 @@ const AdminPrdList = () => {
           </Box>
         </Box> */}
       </Box>
-      <AdminDataGrid columns={columns} rows={data} />
+      <AdminDataGrid columns={columns} rows={data} renderHeader={renderTableHeader} />
     </div>
   );
 };

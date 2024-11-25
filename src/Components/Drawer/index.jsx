@@ -1,4 +1,4 @@
-import { Drawer as MUIDrawer } from "@mui/material";
+import { Drawer as MUIDrawer, Divider } from "@mui/material";
 
 const Drawer = ({
   anchor = "right",
@@ -7,7 +7,8 @@ const Drawer = ({
   children,
   minWidth = 250,
   variant,
-  sx
+  sx,
+  renderHeader,
 }) => {
   return (
     <MUIDrawer
@@ -23,9 +24,15 @@ const Drawer = ({
           width: minWidth,
           boxSizing: "border-box",
         },
-        ...sx
+        ...sx,
       }}
     >
+      {!!renderHeader && (
+        <>
+          {renderHeader()}
+          <Divider />
+        </>
+      )}
       {children}
     </MUIDrawer>
   );

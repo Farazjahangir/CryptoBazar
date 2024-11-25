@@ -12,7 +12,8 @@ const AdminDataGrid = ({
   onRowSelect,
   onEdit,
   onDelete,
-  checkboxSelection= true
+  checkboxSelection= true,
+  renderHeader
 }) => {
   const [cols, setCols] = useState(columns || []);
 
@@ -36,14 +37,15 @@ const AdminDataGrid = ({
   return (
     <Box sx={{ height: "100%", border: "" }}>
       <Box sx={{ backgroundColor: "#ffffff", borderRadius: 2 }} padding={2}>
-        <Box display="flex">
+        {!!renderHeader && renderHeader()}
+        {/* <Box display="flex">
           <Box width={100} mr={2}>
             <Button value="Edit" onClick={onEdit} />
           </Box>
           <Box width={100}>
             <Button value="Delete" onClick={onDelete} />
           </Box>
-        </Box>
+        </Box> */}
       </Box>
       <DataGrid
         loading={loading}
