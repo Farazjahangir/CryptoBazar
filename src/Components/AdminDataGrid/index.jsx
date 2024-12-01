@@ -13,7 +13,8 @@ const AdminDataGrid = ({
   onEdit,
   onDelete,
   checkboxSelection= false,
-  renderHeader
+  renderHeader,
+  pageSize = 10
 }) => {
   const [cols, setCols] = useState(columns || []);
 
@@ -49,6 +50,13 @@ const AdminDataGrid = ({
       </Box>
       <DataGrid
         loading={loading}
+        initialState={{
+          pagination: {
+            paginationModel: {
+              pageSize: pageSize,
+            },
+          },
+        }}
         columns={cols}
         rows={rows}
         onRowClick={onRowClick}

@@ -3,6 +3,7 @@ const ADMIN_SCREEN_PATH = {
   ADM_PRD_LIST: '/admin/product/list',
   ADM_CAT_LIST: '/admin/category/list',
   ADM_ORDER_LIST: '/admin/order/list',
+  ADM_ORDER_DETAILS: '/admin/order/details',
 }
 
 const SCREEN_PATHS = {

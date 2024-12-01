@@ -1,15 +1,23 @@
 import { Box } from "@mui/system";
 import { Avatar } from "@mui/material";
 import { DateTime } from "luxon";
+import { useNavigate } from "react-router-dom";
 
 import PaymentChip from "./PaymentChip";
 import AdminDataGrid from "../../Components/AdminDataGrid";
 import Select from "../../Components/Select";
 import dummyDp from "../../assets/images/profileDummy.png";
 import StatusChip from "./StatusChip";
+import { SCREEN_PATHS } from "../../constants";
 import styles from "./style.module.scss";
 
-const AdminOrderList = () => {
+const AdminOrderList = ({ navigation }) => {
+  const navigate = useNavigate();
+
+  const navigateToOrderDetails = (data) => {
+    navigate(SCREEN_PATHS.ADM_ORDER_DETAILS, { state: data });
+  };
+
   const columns = [
     {
       field: "orderNo",
@@ -29,7 +37,7 @@ const AdminOrderList = () => {
       minWidth: 270,
       display: "flex",
       renderCell: (param) => (
-        <Box display='flex' alignItems='center' p={1}>
+        <Box display="flex" alignItems="center" p={1}>
           <Avatar src={param.row.customer.picture} variant="circle" />
           <Box ml={1}>
             <p>{param.row.customer.name}</p>
@@ -43,18 +51,14 @@ const AdminOrderList = () => {
       headerName: "Payment",
       minWidth: 140,
       display: "flex",
-      renderCell: (param) => (
-        <PaymentChip label={param.row.payment} />
-      )
+      renderCell: (param) => <PaymentChip label={param.row.payment} />,
     },
     {
       field: "status",
       headerName: "Status",
       minWidth: 140,
       display: "flex",
-      renderCell: (param) => (
-        <StatusChip label={param.row.status} />
-      )
+      renderCell: (param) => <StatusChip label={param.row.status} />,
     },
   ];
 
@@ -147,7 +151,12 @@ const AdminOrderList = () => {
           </Box>
         </Box> */}
       </Box>
-      <AdminDataGrid columns={columns} rows={data} checkboxSelection={false} />
+      <AdminDataGrid
+        columns={columns}
+        rows={data}
+        checkboxSelection={false}
+        onRowClick={(data) => navigateToOrderDetails(data.row)}
+      />
     </div>
   );
 };
