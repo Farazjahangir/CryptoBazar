@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Box, display, minWidth } from "@mui/system";
 import { Avatar, Tooltip } from "@mui/material";
 import { Delete, Edit } from "@mui/icons-material";
@@ -10,6 +10,7 @@ import styles from "./style.module.scss";
 import shoe from "../../assets/images/shoe.jpg";
 import cloth from "../../assets/images/jacket.png";
 import AdminCategoryForm from "./AdminCategoryForm";
+import { getProducts } from "../../firebase";
 
 const INITIAL_STATE = {
   name: "",
