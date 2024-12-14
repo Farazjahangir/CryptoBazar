@@ -36,7 +36,7 @@ const AdminDataGrid = ({
   }, [columns]);
 
   return (
-    <Box sx={{ height: "100%", border: "" }}>
+    <Box sx={{ height: '100%' }}>
       <Box sx={{ backgroundColor: "#ffffff", borderRadius: 2 }} padding={2}>
         {!!renderHeader && renderHeader()}
         {/* <Box display="flex">
