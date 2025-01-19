@@ -2693,6 +2693,7 @@ __metadata:
     react-router-dom: ^6.23.1
     react-slideshow-image: ^4.3.1
     react-tabs: ^6.0.2
+    react-toastify: ^11.0.3
     redux-persist: ^6.0.0
     sass: ^1.77.4
     vite: ^5.2.0
@@ -4984,6 +4985,18 @@ __metadata:
   peerDependencies:
     react: ^18.0.0
   checksum: 6a0d5717f2d156e829c74c64fc6a6a2b8348ae0b5b6fe3e6225001c3c40fb9f2ad5615e0653368361479931501916d76a4fb0237220240e6a2cae53585d10bca
+  languageName: node
+  linkType: hard
+
+"react-toastify@npm:^11.0.3":
+  version: 11.0.3
+  resolution: "react-toastify@npm:11.0.3"
+  dependencies:
+    clsx: ^2.1.1
+  peerDependencies:
+    react: ^18 || ^19
+    react-dom: ^18 || ^19
+  checksum: 72d771a7a780c86860350908e6adaf431b681c69ceb09726f3e572a20e361f9fc690906dd5953650e9a4964f0d240d7742d20bce4c86637487772714490c305e
   languageName: node
   linkType: hard
 
