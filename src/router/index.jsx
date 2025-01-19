@@ -40,97 +40,6 @@ import { Box } from "@mui/system";
 const Router = () => {
   const [drawerState, setDrawerState] = useState(false);
   const [adminDrawerState, setAdminDrawerState] = useState(false);
-  const router = createBrowserRouter([
-    {
-      path: SCREEN_PATHS.Login,
-      element: <Login />,
-    },
-    {
-      path: SCREEN_PATHS.Signup,
-      element: <Signup />,
-    },
-    {
-      path: SCREEN_PATHS.HOME,
-      element: (
-        <ProtectedRoute screenName={SCREENS_CODES.DASHBOARD}>
-          <Home />
-        </ProtectedRoute>
-      ),
-    },
-    {
-      path: SCREEN_PATHS.Shop,
-      element: (
-        // <ProtectedRoute screenName={SCREENS_CODES.DASHBOARD}>
-        <Shop />
-        // </ProtectedRoute>
-      ),
-    },
-    {
-      path: SCREEN_PATHS.PRODUCT_DETAILS,
-      element: (
-        // <ProtectedRoute screenName={SCREENS_CODES.DASHBOARD}>
-        <ProductDetails />
-        // </ProtectedRoute>
-      ),
-    },
-    {
-      path: SCREEN_PATHS.PROFILE,
-      element: (
-        // <ProtectedRoute screenName={SCREENS_CODES.DASHBOARD}>
-        <Profile />
-        // </ProtectedRoute>
-      ),
-    },
-    {
-      path: SCREEN_PATHS.ORDER_DETAILS,
-      element: (
-        // <ProtectedRoute screenName={SCREENS_CODES.DASHBOARD}>
-        <OrderDetails />
-        // </ProtectedRoute>
-      ),
-    },
-    {
-      path: SCREEN_PATHS.ADM_DASHBOARD,
-      element: (
-        // <ProtectedRoute screenName={SCREENS_CODES.DASHBOARD}>
-        <AdminDashboard />
-        // </ProtectedRoute>
-      ),
-    },
-    {
-      path: SCREEN_PATHS.ADM_PRD_LIST,
-      element: (
-        // <ProtectedRoute screenName={SCREENS_CODES.DASHBOARD}>
-        <AdminPrdList />
-        // </ProtectedRoute>
-      ),
-    },
-    {
-      path: SCREEN_PATHS.ADM_CAT_LIST,
-      element: (
-        // <ProtectedRoute screenName={SCREENS_CODES.DASHBOARD}>
-        <AdminCatList />
-        // </ProtectedRoute>
-      ),
-    },
-    {
-      path: SCREEN_PATHS.ADM_ORDER_LIST,
-      element: (
-        // <ProtectedRoute screenName={SCREENS_CODES.DASHBOARD}>
-        <AdminOrderList />
-        // </ProtectedRoute>
-      ),
-    },
-    {
-      path: SCREEN_PATHS.ADM_ORDER_DETAILS,
-      element: (
-        // <ProtectedRoute screenName={SCREENS_CODES.DASHBOARD}>
-        <AdminOrderDetails />
-        // </ProtectedRoute>
-      ),
-    },
-  ]);
-
   const location = useLocation();
 
   const toggleAdminDrawer = () => {
@@ -184,16 +93,41 @@ const Router = () => {
           }}
         >
           <Routes>
-            {/* {router.routes.map((item) => (
-              <Route
-                path={item.path}
-                element={item.element}
-                key={getRandomInt(1000000, 100000000)}
-              />
-            ))} */}
             <Route path="/" element={<ProtectedRoute />}>
               <Route path={SCREEN_PATHS.HOME} element={<Home />} />
+              <Route path={SCREEN_PATHS.Shop} element={<Shop />} />
+              <Route
+                path={SCREEN_PATHS.PRODUCT_DETAILS}
+                element={<ProductDetails />}
+              />
+              <Route path={SCREEN_PATHS.PROFILE} element={<Profile />} />
+              <Route
+                path={SCREEN_PATHS.ORDER_DETAILS}
+                element={<OrderDetails />}
+              />
+              <Route
+                path={SCREEN_PATHS.ADM_DASHBOARD}
+                element={<AdminDashboard />}
+              />
+              <Route
+                path={SCREEN_PATHS.ADM_PRD_LIST}
+                element={<AdminPrdList />}
+              />
+              <Route
+                path={SCREEN_PATHS.ADM_CAT_LIST}
+                element={<AdminCatList />}
+              />
+              <Route
+                path={SCREEN_PATHS.ADM_ORDER_LIST}
+                element={<AdminOrderList />}
+              />
+              <Route
+                path={SCREEN_PATHS.ADM_ORDER_DETAILS}
+                element={<AdminOrderDetails />}
+              />
             </Route>
+            <Route path={SCREEN_PATHS.Login} element={<Login />} />
+            <Route path={SCREEN_PATHS.Signup} element={<Signup />} />
           </Routes>
         </div>
         {!ROUTES_WITHOUT_HEADER.includes(location.pathname) && (
