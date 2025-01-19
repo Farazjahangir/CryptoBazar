@@ -36,6 +36,7 @@ const Signup = () => {
         address: userInfo.address,
         contact: userInfo.contact,
         role: "user",
+        isActive: true
       };
       const user = await createDocMut.mutateAsync({
         payload,
