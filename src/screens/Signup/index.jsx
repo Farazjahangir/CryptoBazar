@@ -94,7 +94,7 @@ const Signup = () => {
             />
           </div>
           <div className="mt20">
-            <Button value="Sign Up" onClick={onCreateUser} />
+            <Button value="Sign Up" onClick={onCreateUser} loading={createUserMut.isPending} />
           </div>
         </div>
       </Box>

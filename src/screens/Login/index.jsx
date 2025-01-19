@@ -6,7 +6,7 @@ import { useDispatch } from "react-redux";
 import TextInput from "../../Components/TextInput";
 import Button from "../../Components/Button";
 import { useSignIn } from "../../hooks/reactQuery/useSignIn";
-import {setUser} from "../../redux/userSlice"
+import { setUser } from "../../redux/userSlice";
 import styles from "./style.module.scss";
 
 const Login = () => {
@@ -16,7 +16,7 @@ const Login = () => {
   });
   const navigate = useNavigate();
   const signInMut = useSignIn();
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   const navigateTo = (path) => {
     navigate(path);
@@ -28,11 +28,11 @@ const Login = () => {
         email: userCreds.email,
         password: userCreds.password,
       });
-      dispatch(setUser(user))
-      if (user.role === 'admin') {
-        navigateTo('/admin/dashboard')
+      dispatch(setUser(user));
+      if (user.role === "admin") {
+        navigateTo("/admin/dashboard");
       } else {
-        navigateTo('/')
+        navigateTo("/");
       }
     } catch (e) {
       console.log("Sign in err", e);
@@ -77,7 +77,11 @@ const Login = () => {
             />
           </div>
           <div className="mt20">
-            <Button value="Login" onClick={onLogin} />
+            <Button
+              value="Login"
+              onClick={onLogin}
+              loading={signInMut.isPending}
+            />
           </div>
         </div>
         <p className={styles.forgotText}>Forgot Password?</p>

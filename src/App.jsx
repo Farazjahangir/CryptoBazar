@@ -16,14 +16,12 @@ function App() {
       queries: {
         retry: false, // Disable retries for testing
         onError: (error) => {
-          console.log("Query Error:", error);
           handleFirebaseError(error);
         },
       },
       mutations: {
         retry: false, // Disable retries for mutations as well
         onError: (error) => {
-          console.log("Mutation Error:", error);
           handleFirebaseError(error);
         },
       },
