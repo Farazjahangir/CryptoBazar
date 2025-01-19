@@ -7,7 +7,7 @@ import {
   serverTimestamp,
   getDoc
 } from "firebase/firestore";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 
 import { db, auth } from "./config";
 
@@ -52,8 +52,17 @@ export const readDoc = async (collection, docId) => {
   const docSnap = await getDoc(docRef);
 
   if (docSnap.exists()) {
-    return docSnap.data();
+    return {...docSnap.data(), uid:docId};
   } else {
     return null
   }
 };
+
+export const signIn = async (data) => {
+  const authUser = await signInWithEmailAndPassword(
+    auth,
+    data.email,
+    data.password
+  );
+  return readDoc('users', authUser.user.uid)
+}

@@ -82,11 +82,12 @@ const DRAWER_ROUTES = [
 
 const SIZES = ["SM", "MD", "LG", "XL"]
 
+
 export {
     SCREENS_CODES,
     SCREEN_PATHS,
     ROUTES_WITHOUT_HEADER,
     ADMIN_ROUTES,
     DRAWER_ROUTES,
-    SIZES
+    SIZES,
 }

@@ -34,11 +34,12 @@ import Footer from "../Components/Footer";
 import CartDrawer from "../Components/CartDrawer";
 import AdminHeader from "../Components/AdminHeader";
 import AdminDrawer from "../Components/AdminDrawer";
+import ProtectedRoute from "./protectedRoute";
 import { Box } from "@mui/system";
 
 const Router = () => {
   const [drawerState, setDrawerState] = useState(false);
-  const [adminDrawerState, setAdminDrawerState] = useState(false)
+  const [adminDrawerState, setAdminDrawerState] = useState(false);
   const router = createBrowserRouter([
     {
       path: SCREEN_PATHS.Login,
@@ -51,9 +52,9 @@ const Router = () => {
     {
       path: SCREEN_PATHS.HOME,
       element: (
-        // <ProtectedRoute screenName={SCREENS_CODES.DASHBOARD}>
-        <Home />
-        // </ProtectedRoute>
+        <ProtectedRoute screenName={SCREENS_CODES.DASHBOARD}>
+          <Home />
+        </ProtectedRoute>
       ),
     },
     {
@@ -127,18 +128,18 @@ const Router = () => {
         <AdminOrderDetails />
         // </ProtectedRoute>
       ),
-    }
+    },
   ]);
 
   const location = useLocation();
 
   const toggleAdminDrawer = () => {
-    setAdminDrawerState(!adminDrawerState)
-  }
+    setAdminDrawerState(!adminDrawerState);
+  };
 
   const onAdminDrawerClose = () => {
-    setAdminDrawerState(false)
-  }
+    setAdminDrawerState(false);
+  };
 
   return (
     // <div style={{ display: 'flex' }}>
@@ -155,7 +156,7 @@ const Router = () => {
       )}
 
       {ADMIN_ROUTES.includes(location.pathname) && (
-        <Box sx={{ background: '#e2e7e84d' }}>
+        <Box sx={{ background: "#e2e7e84d" }}>
           <AdminDrawer open={adminDrawerState} onClose={onAdminDrawerClose} />
         </Box>
       )}
@@ -164,14 +165,16 @@ const Router = () => {
           display: "flex",
           flexDirection: "column",
           width: "100%",
-          overflowX: 'hidden',
+          overflowX: "hidden",
           ...(location.pathname.startsWith("/admin")
             ? { backgroundColor: "#e2e7e84d" }
             : {}),
         }}
       >
         {!ROUTES_WITHOUT_HEADER.includes(location.pathname) && <Header />}
-        {ADMIN_ROUTES.includes(location.pathname) && <AdminHeader toggleDrawer={toggleAdminDrawer} />}
+        {ADMIN_ROUTES.includes(location.pathname) && (
+          <AdminHeader toggleDrawer={toggleAdminDrawer} />
+        )}
         <div
           style={{
             flex: 1,
@@ -181,13 +184,16 @@ const Router = () => {
           }}
         >
           <Routes>
-            {router.routes.map((item) => (
+            {/* {router.routes.map((item) => (
               <Route
                 path={item.path}
                 element={item.element}
                 key={getRandomInt(1000000, 100000000)}
               />
-            ))}
+            ))} */}
+            <Route path="/" element={<ProtectedRoute />}>
+              <Route path={SCREEN_PATHS.HOME} element={<Home />} />
+            </Route>
           </Routes>
         </div>
         {!ROUTES_WITHOUT_HEADER.includes(location.pathname) && (
