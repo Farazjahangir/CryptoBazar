@@ -1,4 +1,5 @@
 import { useDropzone } from "react-dropzone";
+import { CircularProgress } from "@mui/material";
 
 import styles from "./style.module.scss";
 
@@ -7,6 +8,7 @@ const ImageDropzone = ({
   file,
   accept,
   onDropRejectedError = () => {},
+  loading
 }) => {
   const { getRootProps, getInputProps } = useDropzone({
     onDrop: (file, errors) => onDropFile(file, errors),
@@ -22,7 +24,8 @@ const ImageDropzone = ({
       className={styles.container}
     >
       <input {...getInputProps()} />
-      <p className={styles.text}>Drag n Drop your file or click to upload</p>
+      {!loading && <p className={styles.text}>Drag n Drop your file or click to upload</p>}
+      {loading && <CircularProgress />}
     </div>
   );
 };

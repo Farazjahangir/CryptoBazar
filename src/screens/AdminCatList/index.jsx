@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Box, display, minWidth } from "@mui/system";
 import { Avatar, Tooltip } from "@mui/material";
 import { Delete, Edit } from "@mui/icons-material";
+import { toast } from "react-toastify";
 
 import Button from "../../Components/Button";
 import AdminDataGrid from "../../Components/AdminDataGrid";
@@ -11,20 +12,25 @@ import shoe from "../../assets/images/shoe.jpg";
 import cloth from "../../assets/images/jacket.png";
 import AdminCategoryForm from "./AdminCategoryForm";
 import { getProducts } from "../../firebase";
+import { useUploadFile } from "../../hooks/reactQuery/useUploadFile";
+import { useCreateDoc } from "../../hooks/reactQuery/useCreateDoc";
 
 const INITIAL_STATE = {
   name: "",
   image: null,
-  desxription: "",
-}
+  description: "",
+};
 const AdminCatList = () => {
+  const uploadFileMut = useUploadFile();
+  const createDocMut = useCreateDoc()
+
   const [categoryFormShow, setCategoryFormShow] = useState(false);
   const [data, setData] = useState(INITIAL_STATE);
 
   const toggleCategoryForm = () => {
     setCategoryFormShow(!categoryFormShow);
     if (categoryFormShow) {
-      setData(INITIAL_STATE)
+      setData(INITIAL_STATE);
     }
   };
 
@@ -34,15 +40,38 @@ const AdminCatList = () => {
     </Box>
   );
 
-  const onDropFile = (file) => {
-    const image = URL.createObjectURL(file[0]);
-    setData({ ...data, image });
+  const onDropFile = async (file) => {
+    try {
+      const res = await uploadFileMut.mutateAsync({
+        file: file[0],
+        folderName: "categories",
+      });
+      console.log("DATA", data)
+      setData({
+        ...data,
+        image: res
+      })
+    } catch (e) {
+      console.log("onDropFile Cat ERRRR", e);
+    }
   };
 
   const handleChange = (value, key) => {
     setData({ ...data, [key]: value });
   };
 
+  const onSubmit = async () => {
+    try {
+      await createDocMut.mutateAsync({
+        payload: data,
+        collectionName: 'Categories'
+      })
+      toggleCategoryForm()
+      toast.success("Category added");
+    } catch(e) {
+      console.log("onSubmit Errr", e)
+    }
+  }
   const columns = [
     {
       field: "name",
@@ -72,7 +101,7 @@ const AdminCatList = () => {
       type: "number",
       minWidth: 130,
       display: "flex",
-      flex: 1
+      flex: 1,
     },
     {
       field: "totalSubCat",
@@ -80,7 +109,7 @@ const AdminCatList = () => {
       type: "number",
       minWidth: 130,
       display: "flex",
-      flex: 1
+      flex: 1,
     },
     {
       field: "startPrice",
@@ -141,6 +170,9 @@ const AdminCatList = () => {
         data={data}
         onDropFile={onDropFile}
         handleChange={handleChange}
+        imageLoading={uploadFileMut.isPending}
+        loading={createDocMut.isPending}
+        onSubmit={onSubmit}
       />
       <h2>Filters</h2>
       <Box maxWidth="800px" mb={4} mt={3}>

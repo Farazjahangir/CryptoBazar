@@ -9,8 +9,16 @@ import dummyPic from "../../../assets/images/dummyPic.jpg";
 import Drawer from "../../../Components/Drawer";
 import styles from "./style.module.scss";
 
-const AdminCategoryForm = ({ open, onClose, data, handleChange, onDropFile }) => {
-
+const AdminCategoryForm = ({
+  open,
+  onClose,
+  data,
+  handleChange,
+  onDropFile,
+  loading,
+  onSubmit,
+  imageLoading
+}) => {
   const renderDrawerHeader = () => (
     <Box
       display="flex"
@@ -49,7 +57,11 @@ const AdminCategoryForm = ({ open, onClose, data, handleChange, onDropFile }) =>
           className={styles.image}
         />
         <Box mt={2}>
-          <ImageDropzone onDropFile={onDropFile} />
+          <ImageDropzone
+            onDropFile={onDropFile}
+            loading={imageLoading}
+            file={data.image}
+          />
         </Box>
         <Box mt={2}>
           <TextInput
@@ -72,7 +84,7 @@ const AdminCategoryForm = ({ open, onClose, data, handleChange, onDropFile }) =>
         </Box>
         <Box display="flex" justifyContent="flex-end">
           <Box width={100} mt={2}>
-            <Button value="Submit" />
+            <Button value="Submit" onClick={onSubmit} disabled={loading} />
           </Box>
         </Box>
       </Container>

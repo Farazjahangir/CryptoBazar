@@ -3,13 +3,14 @@ import ClipLoader from "react-spinners/ClipLoader";
 
 import styles from "./styles.module.scss";
 
-const Button = ({ value, onClick, containerClass, loading }) => {
+const Button = ({ value, onClick, containerClass, loading, disabled }) => {
+  console.log("disabled", disabled)
   const handleClick = () => {
-    if (loading) return;
+    if (loading || disabled) return;
     onClick?.();
   };
   return (
-    <div className={clsx(styles.container, containerClass)} onClick={handleClick}>
+    <div className={clsx(styles.container, containerClass, disabled && styles.disable)} onClick={handleClick}>
       {loading && (
         <ClipLoader
           color={"#ff7a63"}

@@ -4,6 +4,6 @@ import { createDoc } from '../../firebase';
 
 export const useCreateDoc = () => {
   return useMutation({
-    mutationFn: ({payload, collection, docId}) => createDoc(payload, collection, docId),
+    mutationFn: ({payload, collectionName, docId}) => createDoc(payload, collectionName, docId),
   });
 };

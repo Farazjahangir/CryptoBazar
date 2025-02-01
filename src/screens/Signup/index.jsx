@@ -40,7 +40,7 @@ const Signup = () => {
       };
       const user = await createDocMut.mutateAsync({
         payload,
-        collection: "users",
+        collectionName: "users",
         docId: authUser.uid,
       });
       dispatch(setUser(user))
