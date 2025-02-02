@@ -13,7 +13,6 @@ import Timeline from "../../Components/Timeline";
 
 const AdminOrderDetails = () => {
   const { state } = useLocation();
-  console.log("STATE ==>", state);
 
   const renderTableHeader = () => (
     <Box width={180}>

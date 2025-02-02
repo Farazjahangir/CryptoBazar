@@ -3,6 +3,8 @@ import { Box, display, minWidth } from "@mui/system";
 import { Avatar, Tooltip } from "@mui/material";
 import { Delete, Edit } from "@mui/icons-material";
 import { toast } from "react-toastify";
+import { useSelector } from "react-redux";
+import { useQueryClient } from "@tanstack/react-query"
 
 import Button from "../../Components/Button";
 import AdminDataGrid from "../../Components/AdminDataGrid";
@@ -14,6 +16,7 @@ import AdminCategoryForm from "./AdminCategoryForm";
 import { getProducts } from "../../firebase";
 import { useUploadFile } from "../../hooks/reactQuery/useUploadFile";
 import { useCreateDoc } from "../../hooks/reactQuery/useCreateDoc";
+import { queryKeys } from "../../constants/index"
 
 const INITIAL_STATE = {
   name: "",
@@ -23,6 +26,8 @@ const INITIAL_STATE = {
 const AdminCatList = () => {
   const uploadFileMut = useUploadFile();
   const createDocMut = useCreateDoc()
+  const queryClient = useQueryClient()
+  const category = useSelector(state => state.category)
 
   const [categoryFormShow, setCategoryFormShow] = useState(false);
   const [data, setData] = useState(INITIAL_STATE);
@@ -68,6 +73,7 @@ const AdminCatList = () => {
       })
       toggleCategoryForm()
       toast.success("Category added");
+      queryClient.invalidateQueries({queryKey: [queryKeys.USE_GET_CATEGORIES]})
     } catch(e) {
       console.log("onSubmit Errr", e)
     }
@@ -204,8 +210,9 @@ const AdminCatList = () => {
       </Box>
       <AdminDataGrid
         columns={columns}
-        rows={DUMMY_DATA}
+        rows={category.data}
         renderHeader={renderTableHeader}
+        loading={category.loading}
       />
     </div>
   );

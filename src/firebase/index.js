@@ -6,6 +6,10 @@ import {
   getDocs,
   serverTimestamp,
   getDoc,
+  query,
+  limit,
+  startAfter,
+  orderBy
 } from "firebase/firestore";
 import {
   createUserWithEmailAndPassword,
@@ -14,6 +18,7 @@ import {
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 
 import { db, auth, storage } from "./config";
+import { PAGE_SIZE } from "../constants";
 
 export const createUser = async (data) => {
   const authUser = await createUserWithEmailAndPassword(
@@ -34,7 +39,7 @@ export const getProducts = async () => {
 
 export const createDoc = async (data, collectionName, docId) => {
   let docRef;
-  let id = docId
+  let id = docId;
   if (docId) {
     docRef = doc(db, collectionName, docId);
     await setDoc(docRef, {
@@ -48,7 +53,7 @@ export const createDoc = async (data, collectionName, docId) => {
       createdAt: serverTimestamp(),
       updatedAt: serverTimestamp(),
     });
-    id = docRef.id
+    id = docRef.id;
   }
   return readDoc(collectionName, id);
 };
@@ -73,10 +78,7 @@ export const signIn = async (data) => {
   return readDoc("users", authUser.user.uid);
 };
 
-export const uploadImageToFirebase = (
-  file,
-  folderName = "images"
-) => {
+export const uploadImageToFirebase = (file, folderName = "images") => {
   return new Promise((resolve, reject) => {
     if (!file) return reject("No file selected");
 
@@ -96,4 +98,33 @@ export const uploadImageToFirebase = (
       }
     );
   });
+};
+
+export const getCategories = async ({isPaginated = false, pageNumber = 1, lastDoc = null}) => {
+  let q;
+  if (isPaginated) {
+    // Paginated query
+    q = query(
+      collection(db, "Categories"),
+      orderBy("createdAt", "desc"),
+      limit(PAGE_SIZE)
+    );
+
+    if (pageNumber > 1 && lastDoc) {
+      q = query(
+        collection(db, "Categories"),
+        orderBy("createdAt", "desc"),
+        startAfter(lastDoc),
+        limit(PAGE_SIZE)
+      );
+    }
+  } else {
+    // Fetch all data without pagination
+    q = query(collection(db, "Categories"), orderBy("createdAt", "desc"));
+  }
+
+  const querySnapshot = await getDocs(q);
+  const data = querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+
+  return {data};
 };

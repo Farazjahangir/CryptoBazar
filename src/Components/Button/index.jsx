@@ -4,7 +4,6 @@ import ClipLoader from "react-spinners/ClipLoader";
 import styles from "./styles.module.scss";
 
 const Button = ({ value, onClick, containerClass, loading, disabled }) => {
-  console.log("disabled", disabled)
   const handleClick = () => {
     if (loading || disabled) return;
     onClick?.();

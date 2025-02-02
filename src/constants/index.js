@@ -84,6 +84,11 @@ const SIZES = ["SM", "MD", "LG", "XL"]
 
 const PROTECTED_ROUTES = [SCREEN_PATHS.ORDER_DETAILS, SCREEN_PATHS.PROFILE, ...ADMIN_ROUTES]
 
+const queryKeys = {
+  USE_GET_CATEGORIES: 'USE_GET_CATGRIES'
+}
+
+const PAGE_SIZE = 10
 
 export {
     SCREENS_CODES,
@@ -92,5 +97,7 @@ export {
     ADMIN_ROUTES,
     DRAWER_ROUTES,
     SIZES,
-    PROTECTED_ROUTES
+    PROTECTED_ROUTES,
+    PAGE_SIZE,
+    queryKeys
 }

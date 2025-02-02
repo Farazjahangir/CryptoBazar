@@ -28,7 +28,6 @@ export const handleFirebaseError = (error) => {
         console.error("Unhandled Firebase Error:", error.message);
     }
   } else {
-    toast.error("An unknown error occurred!");
-    console.error("Error:", error);
+    toast.error(error.message);
   }
 };

@@ -6,7 +6,8 @@ import {
   Routes,
   useLocation,
 } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 
 import {
   SCREEN_PATHS,
@@ -36,11 +37,18 @@ import AdminHeader from "../Components/AdminHeader";
 import AdminDrawer from "../Components/AdminDrawer";
 import ProtectedRoute from "./protectedRoute";
 import { Box } from "@mui/system";
+import { useGetCategories } from "../hooks/reactQuery/useGetCategories";
+import { setCategory, setCategoryLoading } from "../redux/categorySlice";
 
 const Router = () => {
   const [drawerState, setDrawerState] = useState(false);
   const [adminDrawerState, setAdminDrawerState] = useState(false);
   const location = useLocation();
+  const dispatch = useDispatch()
+
+  const {data: categoriesRes, isFetching: categoryLoading} = useGetCategories()
+
+  const categories = categoriesRes?.data?.length ? categoriesRes?.data : []
 
   const toggleAdminDrawer = () => {
     setAdminDrawerState(!adminDrawerState);
@@ -49,6 +57,16 @@ const Router = () => {
   const onAdminDrawerClose = () => {
     setAdminDrawerState(false);
   };
+
+  useEffect(() => {
+    if (categories.length) {
+      dispatch(setCategory(categories))
+    }
+  }, [categories])
+
+  useEffect(() => {
+    dispatch(setCategoryLoading(categoryLoading))
+  }, [categoryLoading])
 
   return (
     // <div style={{ display: 'flex' }}>

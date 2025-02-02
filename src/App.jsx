@@ -15,7 +15,7 @@ function App() {
     defaultOptions: {
       queries: {
         retry: false, // Disable retries for testing
-        onError: (error) => {
+        throwOnError: (error) => {
           handleFirebaseError(error);
         },
       },

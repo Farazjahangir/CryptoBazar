@@ -49,8 +49,6 @@ const NavList = () => {
     navigateTo(path);
   };
 
-  console.log("ACTIVE", activeKey);
-
   const renderNormalList = (route) => (
     <ListItemButton sx={listItemBtnStyle} onClick={() => onRouteClick(route)}>
       <ListItemText
