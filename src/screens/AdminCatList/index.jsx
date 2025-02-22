@@ -20,7 +20,7 @@ import TextInput from "../../Components/TextInput";
 import { useGetCategories } from "../../hooks/reactQuery/useGetCategories";
 import { useUpdateDoc } from "../../hooks/reactQuery/useUpdateDoc";
 import ConfirmationPopper from "../../Components/ConfirmationPopper";
-import { isAction } from "@reduxjs/toolkit";
+import { useDeleteCategory } from "../../hooks/reactQuery/useDeleteCategory";
 
 const INITIAL_STATE = {
   name: "",
@@ -36,6 +36,8 @@ const AdminCatList = () => {
   const uploadFileMut = useUploadFile();
   const createDocMut = useCreateDoc();
   const updateDocMut = useUpdateDoc();
+  const deleteCategoryMut = useDeleteCategory()
+
   const queryClient = useQueryClient();
   const { data: category, isFetching } = useGetCategories({
     params: {
@@ -129,19 +131,13 @@ const AdminCatList = () => {
 
   const onDeleteCategory = async (id) => {
     try {
-      await updateDocMut.mutateAsync({
-        payload: {
-          isActive: false
-        },
-        collectionName: "Categories",
-        docId: id,
-      });
+      await deleteCategoryMut.mutateAsync(id);
       toast.success("Category deleted");
       queryClient.invalidateQueries({
         queryKey: [queryKeys.USE_GET_CATEGORIES],
       });
     } catch (e) {
-      console.log("onSubmit Errr", e);
+      console.log("onDeleteCategory Errr", e);
     }
   }
 

@@ -147,7 +147,7 @@ const AdminProductForm = ({ open, onClose }) => {
   );
 
   const addColor = () => {
-    setColors([...colors, "#ffffff"]);
+    setColors([...colors, "#ef0e0e"]);
   };
 
   const handleChangeColor = (value, index) => {
@@ -171,7 +171,7 @@ const AdminProductForm = ({ open, onClose }) => {
   const addProduct = async () => {
     try {
       await createDocMut.mutateAsync({
-        payload: { ...data, colors },
+        payload: { ...data, colors, isActive: true },
         collectionName: "Products",
       });
   

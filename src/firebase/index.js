@@ -163,5 +163,25 @@ export const updateDocument = async (collectionName, docId, payload) => {
     throw new Error("Invalid parameters provided!");
   }
   const docRef = doc(db, collectionName, docId);
-  await updateDoc(docRef, payload);
+  await updateDoc(docRef, { ...payload, updatedAt: serverTimestamp() });
+};
+
+export const hasActiveProducts = async (categoryId) => {
+  const q = query(
+    collection(db, "Products"), // Apne products ka collection
+    where("category", "==", categoryId),
+    where("isActive", "==", true) // Sirf active products check karne hain
+  );
+
+  const querySnapshot = await getDocs(q);
+  return !querySnapshot.empty; // Agar koi bhi product mila to true return karega
+};
+
+export const deleteCategory = async (category) => {
+  const hasActiveProduct = await hasActiveProducts(category)
+  if (hasActiveProduct) {
+    throw new Error('Cannot delete this category because it has products')
+  }
+  const docRef = doc(db, "Categories", category);
+  await updateDoc(docRef, { isActive: false, updatedAt: serverTimestamp() });
 };
