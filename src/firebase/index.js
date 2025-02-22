@@ -9,7 +9,7 @@ import {
   query,
   limit,
   startAfter,
-  orderBy
+  orderBy,
 } from "firebase/firestore";
 import {
   createUserWithEmailAndPassword,
@@ -30,12 +30,38 @@ export const createUser = async (data) => {
 };
 
 export const getProducts = async () => {
-  const querySnapshot = await getDocs(collection(db, "products"));
+  const productsSnapshot = await getDocs(collection(db, "Products"));
+  const products = productsSnapshot.docs.map((doc) => ({
+    id: doc.id,
+    ...doc.data(),
+  }));
 
-  querySnapshot.forEach((doc) => {
-    console.log(`${doc.id} =>`, doc.data());
+  // Extract unique category IDs
+  const categoryIds = [...new Set(products.map((p) => p.category).filter(Boolean))];
+
+  // Fetch all categories in parallel
+  const categoryDocs = await Promise.all(
+    categoryIds.map((categoryId) => getDoc(doc(db, "Categories", categoryId)))
+  );
+
+  // Create a category map for quick lookup
+  const categoriesMap = new Map();
+  categoryDocs.forEach((categorySnap, index) => {
+    if (categorySnap.exists()) {
+      categoriesMap.set(categoryIds[index], {
+        id: categorySnap.id,
+        ...categorySnap.data(),
+      });
+    }
   });
+
+  // Attach category data to products
+  return products.map((product) => ({
+    ...product,
+    category: categoriesMap.get(product.category) || null,
+  }));
 };
+
 
 export const createDoc = async (data, collectionName, docId) => {
   let docRef;
@@ -100,7 +126,11 @@ export const uploadImageToFirebase = (file, folderName = "images") => {
   });
 };
 
-export const getCategories = async ({isPaginated = false, pageNumber = 1, lastDoc = null}) => {
+export const getCategories = async ({
+  isPaginated = false,
+  pageNumber = 1,
+  lastDoc = null,
+}) => {
   let q;
   if (isPaginated) {
     // Paginated query
@@ -126,5 +156,5 @@ export const getCategories = async ({isPaginated = false, pageNumber = 1, lastDo
   const querySnapshot = await getDocs(q);
   const data = querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
 
-  return {data};
+  return { data };
 };

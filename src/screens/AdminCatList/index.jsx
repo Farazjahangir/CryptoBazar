@@ -13,7 +13,6 @@ import styles from "./style.module.scss";
 import shoe from "../../assets/images/shoe.jpg";
 import cloth from "../../assets/images/jacket.png";
 import AdminCategoryForm from "./AdminCategoryForm";
-import { getProducts } from "../../firebase";
 import { useUploadFile } from "../../hooks/reactQuery/useUploadFile";
 import { useCreateDoc } from "../../hooks/reactQuery/useCreateDoc";
 import { queryKeys } from "../../constants/index"

@@ -11,11 +11,12 @@ import ColorPicker from "../../../Components/ColorPicker";
 import Button from "../../../Components/Button";
 import dummyPic from "../../../assets/images/dummyPic.jpg";
 import SizeChips from "./SizeChips";
-import { SIZES } from "../../../constants";
+import { queryKeys, SIZES } from "../../../constants";
 import Drawer from "../../../Components/Drawer";
 import styles from "./style.module.scss";
 import { useCreateDoc } from "../../../hooks/reactQuery/useCreateDoc";
 import { useUploadFile } from "../../../hooks/reactQuery/useUploadFile";
+import { useQueryClient } from "@tanstack/react-query";
 
 const DEFAULT_STATE = {
   name: "",
@@ -26,6 +27,7 @@ const DEFAULT_STATE = {
 
 const AdminProductForm = ({ open, onClose }) => {
   const categories = useSelector((state) => state.category.data);
+  const queryClient = useQueryClient()
 
   const createDocMut = useCreateDoc();
   const uploadFileMut = useUploadFile();
@@ -38,10 +40,10 @@ const AdminProductForm = ({ open, onClose }) => {
         file: file[0],
         folderName: "products",
       });
-      setData({
-        ...data,
+      setData((prev) => ({
+        ...prev,
         image: res,
-      });
+      }));      
     } catch (e) {
       console.log("onDropFile Cat ERRRR", e);
     }
@@ -172,7 +174,7 @@ const AdminProductForm = ({ open, onClose }) => {
   
       onClose();
       toast.success("Product added");
-      // queryClient.invalidateQueries({queryKey: [queryKeys.USE_GET_CATEGORIES]})
+      queryClient.invalidateQueries({queryKey: [queryKeys.USE_GET_PRODUCTS]})
     } catch (e) {
       toast.error("Error occured ");
       console.log("onSubmit Errr", e);
