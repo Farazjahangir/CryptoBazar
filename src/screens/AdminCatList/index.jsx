@@ -51,7 +51,6 @@ const AdminCatList = () => {
         file: file[0],
         folderName: "categories",
       });
-      console.log("DATA", data)
       setData({
         ...data,
         image: res

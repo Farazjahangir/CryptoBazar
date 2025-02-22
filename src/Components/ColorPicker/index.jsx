@@ -39,7 +39,7 @@ const ColorPicker = ({ initialColor = "#ffffff", onColorSelect = () => {} }) => 
 
       {/* Color picker and button */}
       {displayColorPicker ? (
-        <ClickAwayListener onClickAway={() => setDisplayColorPicker(false)}>
+        <ClickAwayListener onClickAway={handleColorSelect}>
           <Box
             position="absolute"
             zIndex={2}
