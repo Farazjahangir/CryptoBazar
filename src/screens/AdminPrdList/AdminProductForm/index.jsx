@@ -17,20 +17,23 @@ import styles from "./style.module.scss";
 import { useCreateDoc } from "../../../hooks/reactQuery/useCreateDoc";
 import { useUploadFile } from "../../../hooks/reactQuery/useUploadFile";
 import { useQueryClient } from "@tanstack/react-query";
+import {useUpdateDoc} from "../../../hooks/reactQuery/useUpdateDoc"
 
 const DEFAULT_STATE = {
   name: "",
   category: "",
   image: "",
   sizes: [],
-}
+};
 
-const AdminProductForm = ({ open, onClose }) => {
+const AdminProductForm = ({ open, onClose, productData }) => {
   const categories = useSelector((state) => state.category.data);
-  const queryClient = useQueryClient()
+  const queryClient = useQueryClient();
 
   const createDocMut = useCreateDoc();
   const uploadFileMut = useUploadFile();
+  const updateDocMut = useUpdateDoc()
+
   const [data, setData] = useState(DEFAULT_STATE);
   const [colors, setColors] = useState([]);
 
@@ -43,7 +46,7 @@ const AdminProductForm = ({ open, onClose }) => {
       setData((prev) => ({
         ...prev,
         image: res,
-      }));      
+      }));
     } catch (e) {
       console.log("onDropFile Cat ERRRR", e);
     }
@@ -53,7 +56,7 @@ const AdminProductForm = ({ open, onClose }) => {
     setData((prev) => ({
       ...prev,
       [key]: value,
-    })); 
+    }));
   };
 
   const onSizeChipClick = (size) => {
@@ -66,6 +69,23 @@ const AdminProductForm = ({ open, onClose }) => {
     }
     setData(newData);
   };
+
+  const onUpdate = async () => {
+    try {
+      await updateDocMut.mutateAsync({
+        payload: {...data, colors},
+        collectionName: "Products",
+        docId: productData.id,
+      });
+      onClose()
+      toast.success("Product updated");
+      queryClient.invalidateQueries({
+        queryKey: [queryKeys.USE_GET_PRODUCTS],
+      });
+    } catch(e) {
+      console.log("UPDATE PRODUCT ERR", e)
+    }
+  }
 
   const categoryOptions = useMemo(
     () =>
@@ -80,6 +100,22 @@ const AdminProductForm = ({ open, onClose }) => {
     [categories]
   );
 
+  useEffect(() => {
+    if (productData) {
+      setData({
+        name: productData.name,
+        image: productData.image,
+        category: productData?.category?.id ?? "",
+        price: productData.price,
+        quantity: productData.quantity,
+        sizes: productData?.sizes || [],
+      });
+      setColors(productData?.colors ?? []);
+    }
+  }, [productData]);
+
+  console.log("colors", colors)
+
   const renderInputs = () => (
     <Box>
       <Box mt={2}>
@@ -88,6 +124,7 @@ const AdminProductForm = ({ open, onClose }) => {
           variant="outlined"
           sx={{ backgroundColor: "#ffffff" }}
           onChange={(_, value) => handleChange(value, "name")}
+          value={data.name}
         />
       </Box>
       <Box mt={2}>
@@ -105,6 +142,7 @@ const AdminProductForm = ({ open, onClose }) => {
           variant="outlined"
           sx={{ backgroundColor: "#ffffff" }}
           onChange={(_, value) => handleChange(value, "price")}
+          value={data.price}
         />
       </Box>
       <Box mt={2}>
@@ -113,6 +151,7 @@ const AdminProductForm = ({ open, onClose }) => {
           variant="outlined"
           sx={{ backgroundColor: "#ffffff" }}
           onChange={(_, value) => handleChange(value, "quantity")}
+          value={data.quantity}
         />
       </Box>
       <Box display="flex" alignItems={"center"} flexWrap={"wrap"} mt={2}>
@@ -120,7 +159,6 @@ const AdminProductForm = ({ open, onClose }) => {
           <Button value="Add Color" onClick={addColor} />
         </Box>
         {colors.map((item, index) => {
-          console.log("item", item);
           return (
             <Box ml={2}>
               <ColorPicker
@@ -163,7 +201,9 @@ const AdminProductForm = ({ open, onClose }) => {
       justifyContent="space-between"
       padding={2}
     >
-      <p className={styles.title}>Add Product</p>
+      <p className={styles.title}>
+        {productData ? "Edit Product" : "Add Product"}
+      </p>
       <Close fontSize="large" className={styles.closeIcon} onClick={onClose} />
     </Box>
   );
@@ -174,10 +214,10 @@ const AdminProductForm = ({ open, onClose }) => {
         payload: { ...data, colors, isActive: true },
         collectionName: "Products",
       });
-  
+
       onClose();
       toast.success("Product added");
-      queryClient.invalidateQueries({queryKey: [queryKeys.USE_GET_PRODUCTS]})
+      queryClient.invalidateQueries({ queryKey: [queryKeys.USE_GET_PRODUCTS] });
     } catch (e) {
       toast.error("Error occured ");
       console.log("onSubmit Errr", e);
@@ -186,7 +226,7 @@ const AdminProductForm = ({ open, onClose }) => {
 
   useEffect(() => {
     if (!open) {
-      setData({...DEFAULT_STATE, sizes: []});
+      setData({ ...DEFAULT_STATE, sizes: [] });
       setColors([]);
     }
   }, [open]);
@@ -217,17 +257,29 @@ const AdminProductForm = ({ open, onClose }) => {
           className={styles.image}
         />
         <Box mt={2}>
-          <ImageDropzone onDropFile={onDropFile} loading={uploadFileMut.isPending} />
+          <ImageDropzone
+            onDropFile={onDropFile}
+            loading={uploadFileMut.isPending}
+          />
         </Box>
         {renderInputs()}
         <Box display="flex" justifyContent="flex-end">
           <Box width={100} mt={2}>
-            <Button
-              value="Submit"
-              onClick={addProduct}
-              loading={createDocMut.isPending}
-              disabled={uploadFileMut.isPending}
-            />
+            {productData ? (
+              <Button
+                value="Update"
+                onClick={onUpdate}
+                loading={updateDocMut.isPending}
+                disabled={uploadFileMut.isPending}
+              />
+            ) : (
+              <Button
+                value="Submit"
+                onClick={addProduct}
+                loading={createDocMut.isPending}
+                disabled={uploadFileMut.isPending}
+              />
+            )}
           </Box>
         </Box>
       </Container>

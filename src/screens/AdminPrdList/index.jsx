@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Box, display } from "@mui/system";
 import { Avatar, Tooltip } from "@mui/material";
 import { Delete, Edit } from "@mui/icons-material";
@@ -20,6 +20,7 @@ const AdminPrdList = () => {
   const [filters, setFilters] = useState({
     category: ''
   })
+  const [selectedProduct, setSelectedProduct] = useState()
 
   const categories = useSelector((state) => state.category.data);
 
@@ -58,6 +59,17 @@ const AdminPrdList = () => {
       category: ''
     })
   }
+
+  const handleEdit = (data) => {
+    setSelectedProduct(data)
+    setProductFormShow(true)
+  }
+
+  useEffect(() => {
+    if (!productFormShow) {
+      setSelectedProduct(undefined)
+    }
+  }, [productFormShow])
   const categoryOptions = useMemo(
     () =>
       categories.reduce((acc, item) => {
@@ -162,7 +174,7 @@ const AdminPrdList = () => {
           flex={1}
         >
           <Tooltip title="Edit">
-            <Edit onClick={() => console.log("pressed")} />
+            <Edit onClick={() => handleEdit(param.row)} />
           </Tooltip>
           <Tooltip title="Delete">
             <Delete />
@@ -174,7 +186,7 @@ const AdminPrdList = () => {
 
   return (
     <div className={styles.container}>
-      <AdminProductForm open={productFormShow} onClose={toggleProductForm} />
+      <AdminProductForm open={productFormShow} onClose={toggleProductForm} productData={selectedProduct} />
       <h2>Filters</h2>
       <Box maxWidth="800px" mb={4} mt={3}>
         <Box display="flex" mt={1} width="100%">

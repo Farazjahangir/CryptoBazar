@@ -4,8 +4,8 @@ import { Box, ClickAwayListener } from "@mui/material";
 
 import Button from "../Button";
 
-const ColorPicker = ({ initialColor = "#ffffff", onColorSelect = () => {} }) => {
-  const [color, setColor] = useState(initialColor);
+const ColorPicker = ({ initialColor = "#ffffff", onColorSelect = () => {}, value }) => {
+  const [color, setColor] = useState(value ?? initialColor);
   const [displayColorPicker, setDisplayColorPicker] = useState(false);
 
   // Handle color change but don't finalize yet
