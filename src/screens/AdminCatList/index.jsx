@@ -19,6 +19,8 @@ import { queryKeys } from "../../constants/index";
 import TextInput from "../../Components/TextInput";
 import { useGetCategories } from "../../hooks/reactQuery/useGetCategories";
 import { useUpdateDoc } from "../../hooks/reactQuery/useUpdateDoc";
+import ConfirmationPopper from "../../Components/ConfirmationPopper";
+import { isAction } from "@reduxjs/toolkit";
 
 const INITIAL_STATE = {
   name: "",
@@ -33,7 +35,7 @@ const AdminCatList = () => {
 
   const uploadFileMut = useUploadFile();
   const createDocMut = useCreateDoc();
-  const updateDocMut = useUpdateDoc()
+  const updateDocMut = useUpdateDoc();
   const queryClient = useQueryClient();
   const { data: category, isFetching } = useGetCategories({
     params: {
@@ -103,7 +105,7 @@ const AdminCatList = () => {
       await updateDocMut.mutateAsync({
         payload: data,
         collectionName: "Categories",
-        docId: selectedCategoryId
+        docId: selectedCategoryId,
       });
       toggleCategoryForm();
       toast.success("Category updated");
@@ -124,6 +126,24 @@ const AdminCatList = () => {
     setSelectedCategoryId(data.id);
     setCategoryFormShow(true);
   };
+
+  const onDeleteCategory = async (id) => {
+    try {
+      await updateDocMut.mutateAsync({
+        payload: {
+          isActive: false
+        },
+        collectionName: "Categories",
+        docId: id,
+      });
+      toast.success("Category deleted");
+      queryClient.invalidateQueries({
+        queryKey: [queryKeys.USE_GET_CATEGORIES],
+      });
+    } catch (e) {
+      console.log("onSubmit Errr", e);
+    }
+  }
 
   const columns = [
     {
@@ -164,9 +184,11 @@ const AdminCatList = () => {
           <Tooltip title="Edit">
             <Edit onClick={() => onEdit(param.row)} />
           </Tooltip>
-          <Tooltip title="Delete">
-            <Delete />
-          </Tooltip>
+          <ConfirmationPopper onConfirm={() => onDeleteCategory(param.row.id)}>
+            <Tooltip title="Delete">
+              <Delete />
+            </Tooltip>
+          </ConfirmationPopper>
         </Box>
       ),
     },
@@ -194,9 +216,9 @@ const AdminCatList = () => {
   useEffect(() => {
     if (!categoryFormShow) {
       setData(INITIAL_STATE);
-      setSelectedCategoryId('')
+      setSelectedCategoryId("");
     }
-  },[categoryFormShow])
+  }, [categoryFormShow]);
 
   return (
     <div className={styles.container}>
@@ -244,7 +266,7 @@ const AdminCatList = () => {
         columns={columns}
         rows={category?.data || []}
         renderHeader={renderTableHeader}
-        loading={isFetching}
+        loading={isFetching || updateDocMut.isPending}
       />
     </div>
   );
