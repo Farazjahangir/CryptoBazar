@@ -13,22 +13,29 @@ import { useGetProducts } from "../../hooks/reactQuery/useGetProducts";
 import Chip from "../../Components/Chip";
 import TextInput from "../../Components/TextInput";
 import { useSelector } from "react-redux";
+import ConfirmationPopper from "../../Components/ConfirmationPopper";
+import { useUpdateDoc } from "../../hooks/reactQuery/useUpdateDoc";
+import { useQueryClient } from "@tanstack/react-query";
+import { queryKeys } from "../../constants";
+import { toast } from "react-toastify";
 
 const AdminPrdList = () => {
   const [productFormShow, setProductFormShow] = useState(false);
-  const [searchText, setSearchText] = useState('')
+  const [searchText, setSearchText] = useState("");
   const [filters, setFilters] = useState({
-    category: ''
-  })
-  const [selectedProduct, setSelectedProduct] = useState()
+    category: "",
+  });
+  const [selectedProduct, setSelectedProduct] = useState();
 
   const categories = useSelector((state) => state.category.data);
+  const updateDocMut = useUpdateDoc();
+  const queryClient = useQueryClient();
 
   const { data: products = [], isFetching: prdLoading } = useGetProducts({
     params: {
       search: searchText,
-      categoryId: filters.category
-    }
+      categoryId: filters.category,
+    },
   });
 
   const toggleProductForm = () => {
@@ -36,8 +43,8 @@ const AdminPrdList = () => {
   };
 
   const onSearch = (e) => {
-    setSearchText(e.target.value)
-  }
+    setSearchText(e.target.value);
+  };
 
   const renderTableHeader = () => (
     <Box display="flex" alignItems="center" justifyContent="space-between">
@@ -51,25 +58,39 @@ const AdminPrdList = () => {
   );
 
   const handleChangeFilter = (value, key) => {
-    setFilters({...filters, [key]: value})
-  }
+    setFilters({ ...filters, [key]: value });
+  };
 
   const clearFilter = () => {
     setFilters({
-      category: ''
-    })
-  }
+      category: "",
+    });
+  };
 
   const handleEdit = (data) => {
-    setSelectedProduct(data)
-    setProductFormShow(true)
-  }
+    setSelectedProduct(data);
+    setProductFormShow(true);
+  };
+
+  const onDelete = async (id) => {
+    try {
+      await updateDocMut.mutateAsync({
+        payload: { isActive: false },
+        collectionName: "Products",
+        docId: id,
+      });
+      toast.success("Product deleted");
+      queryClient.invalidateQueries({ queryKey: [queryKeys.USE_GET_PRODUCTS] });
+    } catch (e) {
+      console.log("delete product err", e);
+    }
+  };
 
   useEffect(() => {
     if (!productFormShow) {
-      setSelectedProduct(undefined)
+      setSelectedProduct(undefined);
     }
-  }, [productFormShow])
+  }, [productFormShow]);
   const categoryOptions = useMemo(
     () =>
       categories.reduce((acc, item) => {
@@ -176,9 +197,11 @@ const AdminPrdList = () => {
           <Tooltip title="Edit">
             <Edit onClick={() => handleEdit(param.row)} />
           </Tooltip>
-          <Tooltip title="Delete">
-            <Delete />
-          </Tooltip>
+          <ConfirmationPopper onConfirm={() => onDelete(param.row.id)}>
+            <Tooltip title="Delete">
+              <Delete />
+            </Tooltip>
+          </ConfirmationPopper>
         </Box>
       ),
     },
@@ -186,7 +209,11 @@ const AdminPrdList = () => {
 
   return (
     <div className={styles.container}>
-      <AdminProductForm open={productFormShow} onClose={toggleProductForm} productData={selectedProduct} />
+      <AdminProductForm
+        open={productFormShow}
+        onClose={toggleProductForm}
+        productData={selectedProduct}
+      />
       <h2>Filters</h2>
       <Box maxWidth="800px" mb={4} mt={3}>
         <Box display="flex" mt={1} width="100%">
@@ -194,7 +221,9 @@ const AdminPrdList = () => {
             <Select
               label="Select Category"
               menus={categoryOptions ?? []}
-              handleChange={(e) => handleChangeFilter(e.target.value, 'category')}
+              handleChange={(e) =>
+                handleChangeFilter(e.target.value, "category")
+              }
               value={filters.category}
             />
           </Box>
@@ -210,7 +239,9 @@ const AdminPrdList = () => {
             />
           </Box>
         </Box>
-        <p className={styles.clearText} onClick={clearFilter}>Clear filter</p>
+        <p className={styles.clearText} onClick={clearFilter}>
+          Clear filter
+        </p>
         {/* <Box display="flex" justifyContent="flex-end" mt={1}>
           <Box width={120} mr={2}>
             <Button value="Filter" />
@@ -224,7 +255,7 @@ const AdminPrdList = () => {
         columns={columns}
         rows={products}
         renderHeader={renderTableHeader}
-        loading={prdLoading}
+        loading={prdLoading || updateDocMut.isPending}
       />
     </div>
   );

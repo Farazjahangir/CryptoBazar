@@ -114,8 +114,6 @@ const AdminProductForm = ({ open, onClose, productData }) => {
     }
   }, [productData]);
 
-  console.log("colors", colors)
-
   const renderInputs = () => (
     <Box>
       <Box mt={2}>

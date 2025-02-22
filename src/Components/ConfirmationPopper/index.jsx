@@ -8,7 +8,7 @@ import styles from "./styles.module.scss"
 const ConfirmationPopper = ({
   children,
   onConfirm,
-  message = "Are you sure?",
+  message = "Are you sure you want to delete? this action is irreversible",
   color = "error",
 }) => {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -47,7 +47,8 @@ const ConfirmationPopper = ({
           paper: {
             sx: {
               padding: 1.3,
-              borderRadius: 4
+              borderRadius: 4,
+              maxWidth: 300
             },
           },
         }}
