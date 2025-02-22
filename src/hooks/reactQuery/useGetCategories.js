@@ -9,6 +9,6 @@ export const useGetCategories = ({params, options} = {}) => {
     queryKey: [queryKeys.USE_GET_CATEGORIES, ...keys],
     queryFn: () => getCategories(params),
     enabled: true,
-    refetchOnWindowFocus: options?.refetchOnWindowFocus ?? true,
+    refetchOnWindowFocus: options?.refetchOnWindowFocus ?? false,
   });
 };

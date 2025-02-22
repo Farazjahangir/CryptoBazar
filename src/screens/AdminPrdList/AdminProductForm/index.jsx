@@ -50,7 +50,10 @@ const AdminProductForm = ({ open, onClose }) => {
   };
 
   const handleChange = (value, key) => {
-    setData({ ...data, [key]: value });
+    setData((prev) => ({
+      ...prev,
+      [key]: value,
+    })); 
   };
 
   const onSizeChipClick = (size) => {

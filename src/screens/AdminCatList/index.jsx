@@ -18,6 +18,7 @@ import { useCreateDoc } from "../../hooks/reactQuery/useCreateDoc";
 import { queryKeys } from "../../constants/index";
 import TextInput from "../../Components/TextInput";
 import { useGetCategories } from "../../hooks/reactQuery/useGetCategories";
+import { useUpdateDoc } from "../../hooks/reactQuery/useUpdateDoc";
 
 const INITIAL_STATE = {
   name: "",
@@ -28,9 +29,11 @@ const AdminCatList = () => {
   const [categoryFormShow, setCategoryFormShow] = useState(false);
   const [data, setData] = useState(INITIAL_STATE);
   const [searchText, setSearchText] = useState("");
+  const [selectedCategoryId, setSelectedCategoryId] = useState("");
 
   const uploadFileMut = useUploadFile();
   const createDocMut = useCreateDoc();
+  const updateDocMut = useUpdateDoc()
   const queryClient = useQueryClient();
   const { data: category, isFetching } = useGetCategories({
     params: {
@@ -40,9 +43,6 @@ const AdminCatList = () => {
 
   const toggleCategoryForm = () => {
     setCategoryFormShow(!categoryFormShow);
-    if (categoryFormShow) {
-      setData(INITIAL_STATE);
-    }
   };
 
   const onSearch = (e) => {
@@ -66,23 +66,26 @@ const AdminCatList = () => {
         file: file[0],
         folderName: "categories",
       });
-      setData({
-        ...data,
+      setData((prev) => ({
+        ...prev,
         image: res,
-      });
+      }));
     } catch (e) {
       console.log("onDropFile Cat ERRRR", e);
     }
   };
 
   const handleChange = (value, key) => {
-    setData({ ...data, [key]: value });
+    setData((prev) => ({
+      ...prev,
+      [key]: value,
+    }));
   };
 
   const onSubmit = async () => {
     try {
       await createDocMut.mutateAsync({
-        payload: data,
+        payload: { ...data, isActive: true },
         collectionName: "Categories",
       });
       toggleCategoryForm();
@@ -94,6 +97,34 @@ const AdminCatList = () => {
       console.log("onSubmit Errr", e);
     }
   };
+
+  const onUpdate = async () => {
+    try {
+      await updateDocMut.mutateAsync({
+        payload: data,
+        collectionName: "Categories",
+        docId: selectedCategoryId
+      });
+      toggleCategoryForm();
+      toast.success("Category updated");
+      queryClient.invalidateQueries({
+        queryKey: [queryKeys.USE_GET_CATEGORIES],
+      });
+    } catch (e) {
+      console.log("onSubmit Errr", e);
+    }
+  };
+
+  const onEdit = (data) => {
+    setData({
+      name: data.name,
+      image: data.image,
+      description: data?.description ?? "",
+    });
+    setSelectedCategoryId(data.id);
+    setCategoryFormShow(true);
+  };
+
   const columns = [
     {
       field: "name",
@@ -131,7 +162,7 @@ const AdminCatList = () => {
           flex={1}
         >
           <Tooltip title="Edit">
-            <Edit onClick={() => console.log("pressed")} />
+            <Edit onClick={() => onEdit(param.row)} />
           </Tooltip>
           <Tooltip title="Delete">
             <Delete />
@@ -160,6 +191,13 @@ const AdminCatList = () => {
     },
   ];
 
+  useEffect(() => {
+    if (!categoryFormShow) {
+      setData(INITIAL_STATE);
+      setSelectedCategoryId('')
+    }
+  },[categoryFormShow])
+
   return (
     <div className={styles.container}>
       <AdminCategoryForm
@@ -169,8 +207,10 @@ const AdminCatList = () => {
         onDropFile={onDropFile}
         handleChange={handleChange}
         imageLoading={uploadFileMut.isPending}
-        loading={createDocMut.isPending}
+        loading={createDocMut.isPending || updateDocMut.isPending}
         onSubmit={onSubmit}
+        categoryId={selectedCategoryId}
+        onUpdate={onUpdate}
       />
       <h2>Filters</h2>
       <Box maxWidth="800px" mb={4} mt={3}>

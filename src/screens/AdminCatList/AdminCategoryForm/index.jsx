@@ -17,7 +17,9 @@ const AdminCategoryForm = ({
   onDropFile,
   loading,
   onSubmit,
-  imageLoading
+  imageLoading,
+  categoryId,
+  onUpdate,
 }) => {
   const renderDrawerHeader = () => (
     <Box
@@ -26,7 +28,9 @@ const AdminCategoryForm = ({
       justifyContent="space-between"
       padding={2}
     >
-      <p className={styles.title}>Add Category</p>
+      <p className={styles.title}>
+        {categoryId ? "Edit Category" : "Add Category"}
+      </p>
       <Close fontSize="large" className={styles.closeIcon} onClick={onClose} />
     </Box>
   );
@@ -84,7 +88,21 @@ const AdminCategoryForm = ({
         </Box>
         <Box display="flex" justifyContent="flex-end">
           <Box width={100} mt={2}>
-            <Button value="Submit" onClick={onSubmit} disabled={loading} />
+            {categoryId ? (
+              <Button
+                value="Update"
+                onClick={onUpdate}
+                disabled={imageLoading}
+                loading={loading}
+              />
+            ) : (
+              <Button
+                value="Submit"
+                onClick={onSubmit}
+                disabled={imageLoading}
+                loading={loading}
+              />
+            )}
           </Box>
         </Box>
       </Container>

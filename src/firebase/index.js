@@ -10,8 +10,10 @@ import {
   limit,
   startAfter,
   orderBy,
-  startAt, 
-  endAt
+  startAt,
+  endAt,
+  where,
+  updateDoc,
 } from "firebase/firestore";
 import {
   createUserWithEmailAndPassword,
@@ -130,21 +132,36 @@ export const uploadImageToFirebase = (file, folderName = "images") => {
 };
 
 export const getCategories = async (params = {}) => {
-  const {search = ""} = params
+  const { search = "" } = params;
   let q;
+  const categoriesRef = collection(db, "Categories");
+
   if (search) {
     q = query(
-      collection(db, "Categories"),
+      categoriesRef,
+      where("isActive", "==", true), // ✅ Requires Composite Index
       orderBy("name"),
       startAt(search),
       endAt(search + "\uf8ff")
     );
   } else {
-    q = query(collection(db, "Categories"), orderBy("createdAt", "desc"));
+    q = query(
+      categoriesRef,
+      where("isActive", "==", true),
+      orderBy("createdAt", "desc") // ✅ Requires Composite Index
+    );
   }
 
   const querySnapshot = await getDocs(q);
   const data = querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
 
   return { data };
+};
+
+export const updateDocument = async (collectionName, docId, payload) => {
+  if (!collectionName || !docId || !payload) {
+    throw new Error("Invalid parameters provided!");
+  }
+  const docRef = doc(db, collectionName, docId);
+  await updateDoc(docRef, payload);
 };
