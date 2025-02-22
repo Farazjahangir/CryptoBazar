@@ -42,6 +42,7 @@ const NavList = () => {
   };
 
   const onRouteClick = (route) => {
+    navigateTo(route.path);
     setActiveKey(route.key);
   };
 

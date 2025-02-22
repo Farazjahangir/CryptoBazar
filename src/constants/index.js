@@ -1,8 +1,8 @@
 const ADMIN_SCREEN_PATH = {
   ADM_DASHBOARD: '/admin/dashboard',
-  ADM_PRD_LIST: '/admin/product/list',
-  ADM_CAT_LIST: '/admin/category/list',
-  ADM_ORDER_LIST: '/admin/order/list',
+  ADM_PRD_LIST: '/admin/products',
+  ADM_CAT_LIST: '/admin/categories',
+  ADM_ORDER_LIST: '/admin/orders',
   ADM_ORDER_DETAILS: '/admin/order/details',
 }
 
@@ -35,48 +35,29 @@ const DRAWER_ROUTES = [
   },
   {
     name: "Categories",
-    key: 'category',
-    subMenu: [
-      {
-        name: "List",
-        key: 'c-list',
-        path: '/admin/category/list'
-      },
-      {
-        name: "Create",
-        key: 'c-create',
-      },
-    ]
+    key: 'categories',
+    path: '/admin/categories'
   },
   {
     name: "Products",
-    key: 'product',
-    subMenu: [
-      {
-        name: "List",
-        key: 'p-list',
-        path: '/admin/product/list'
-      },
-      {
-        name: "Create",
-        key: 'p-create',
-      },
-    ]
+    key: 'products',
+    path: '/admin/products'
+    // subMenu: [
+    //   {
+    //     name: "List",
+    //     key: 'p-list',
+    //     path: '/admin/product/list'
+    //   },
+    //   {
+    //     name: "Create",
+    //     key: 'p-create',
+    //   },
+    // ]
   },
   {
     name: "Orders",
     key: 'orders',
-    subMenu: [
-      {
-        name: "List",
-        key: 'p-list',
-        path: '/admin/order/list'
-      },
-      {
-        name: "Create",
-        key: 'p-create',
-      },
-    ]
+    path: '/admin/orders'
   },
 ]
 

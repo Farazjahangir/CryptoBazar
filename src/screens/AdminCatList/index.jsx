@@ -100,34 +100,10 @@ const AdminCatList = () => {
       ),
     },
     {
-      field: "totalPrd",
-      headerName: "Products",
-      type: "number",
-      minWidth: 130,
-      display: "flex",
-      flex: 1,
-    },
-    {
-      field: "totalSubCat",
-      headerName: "Sub Categories",
-      type: "number",
-      minWidth: 130,
-      display: "flex",
-      flex: 1,
-    },
-    {
-      field: "startPrice",
-      headerName: "Starting Price",
-      type: "number",
-      minWidth: 130,
-      flex: 1,
-      display: "flex",
-    },
-    {
       field: "actions",
       headerName: "Actions",
-      minWidth: 120,
-      display: "flex",
+      minWidth: 100,
+      sortable: false,
       renderCell: (param) => (
         <Box
           display="flex"
