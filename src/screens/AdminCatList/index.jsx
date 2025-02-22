@@ -4,7 +4,7 @@ import { Avatar, Tooltip } from "@mui/material";
 import { Delete, Edit } from "@mui/icons-material";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
-import { useQueryClient } from "@tanstack/react-query"
+import { useQueryClient } from "@tanstack/react-query";
 
 import Button from "../../Components/Button";
 import AdminDataGrid from "../../Components/AdminDataGrid";
@@ -15,7 +15,9 @@ import cloth from "../../assets/images/jacket.png";
 import AdminCategoryForm from "./AdminCategoryForm";
 import { useUploadFile } from "../../hooks/reactQuery/useUploadFile";
 import { useCreateDoc } from "../../hooks/reactQuery/useCreateDoc";
-import { queryKeys } from "../../constants/index"
+import { queryKeys } from "../../constants/index";
+import TextInput from "../../Components/TextInput";
+import { useGetCategories } from "../../hooks/reactQuery/useGetCategories";
 
 const INITIAL_STATE = {
   name: "",
@@ -23,13 +25,18 @@ const INITIAL_STATE = {
   description: "",
 };
 const AdminCatList = () => {
-  const uploadFileMut = useUploadFile();
-  const createDocMut = useCreateDoc()
-  const queryClient = useQueryClient()
-  const category = useSelector(state => state.category)
-
   const [categoryFormShow, setCategoryFormShow] = useState(false);
   const [data, setData] = useState(INITIAL_STATE);
+  const [searchText, setSearchText] = useState("");
+
+  const uploadFileMut = useUploadFile();
+  const createDocMut = useCreateDoc();
+  const queryClient = useQueryClient();
+  const { data: category, isFetching } = useGetCategories({
+    params: {
+      search: searchText,
+    },
+  });
 
   const toggleCategoryForm = () => {
     setCategoryFormShow(!categoryFormShow);
@@ -38,9 +45,18 @@ const AdminCatList = () => {
     }
   };
 
+  const onSearch = (e) => {
+    setSearchText(e.target.value);
+  };
+
   const renderTableHeader = () => (
-    <Box width={180}>
-      <Button value="Add Category" onClick={toggleCategoryForm} />
+    <Box display="flex" alignItems="center" justifyContent="space-between">
+      <Box width={300}>
+        <TextInput variant="outlined" label="Search" onChange={onSearch} />
+      </Box>
+      <Box width={180}>
+        <Button value="Add Category" onClick={toggleCategoryForm} />
+      </Box>
     </Box>
   );
 
@@ -52,8 +68,8 @@ const AdminCatList = () => {
       });
       setData({
         ...data,
-        image: res
-      })
+        image: res,
+      });
     } catch (e) {
       console.log("onDropFile Cat ERRRR", e);
     }
@@ -67,15 +83,17 @@ const AdminCatList = () => {
     try {
       await createDocMut.mutateAsync({
         payload: data,
-        collectionName: 'Categories'
-      })
-      toggleCategoryForm()
+        collectionName: "Categories",
+      });
+      toggleCategoryForm();
       toast.success("Category added");
-      queryClient.invalidateQueries({queryKey: [queryKeys.USE_GET_CATEGORIES]})
-    } catch(e) {
-      console.log("onSubmit Errr", e)
+      queryClient.invalidateQueries({
+        queryKey: [queryKeys.USE_GET_CATEGORIES],
+      });
+    } catch (e) {
+      console.log("onSubmit Errr", e);
     }
-  }
+  };
   const columns = [
     {
       field: "name",
@@ -184,9 +202,9 @@ const AdminCatList = () => {
       </Box>
       <AdminDataGrid
         columns={columns}
-        rows={category.data}
+        rows={category?.data || []}
         renderHeader={renderTableHeader}
-        loading={category.loading}
+        loading={isFetching}
       />
     </div>
   );

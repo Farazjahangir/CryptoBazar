@@ -10,6 +10,8 @@ import {
   limit,
   startAfter,
   orderBy,
+  startAt, 
+  endAt
 } from "firebase/firestore";
 import {
   createUserWithEmailAndPassword,
@@ -37,7 +39,9 @@ export const getProducts = async () => {
   }));
 
   // Extract unique category IDs
-  const categoryIds = [...new Set(products.map((p) => p.category).filter(Boolean))];
+  const categoryIds = [
+    ...new Set(products.map((p) => p.category).filter(Boolean)),
+  ];
 
   // Fetch all categories in parallel
   const categoryDocs = await Promise.all(
@@ -61,7 +65,6 @@ export const getProducts = async () => {
     category: categoriesMap.get(product.category) || null,
   }));
 };
-
 
 export const createDoc = async (data, collectionName, docId) => {
   let docRef;
@@ -126,30 +129,17 @@ export const uploadImageToFirebase = (file, folderName = "images") => {
   });
 };
 
-export const getCategories = async ({
-  isPaginated = false,
-  pageNumber = 1,
-  lastDoc = null,
-}) => {
+export const getCategories = async (params = {}) => {
+  const {search = ""} = params
   let q;
-  if (isPaginated) {
-    // Paginated query
+  if (search) {
     q = query(
       collection(db, "Categories"),
-      orderBy("createdAt", "desc"),
-      limit(PAGE_SIZE)
+      orderBy("name"),
+      startAt(search),
+      endAt(search + "\uf8ff")
     );
-
-    if (pageNumber > 1 && lastDoc) {
-      q = query(
-        collection(db, "Categories"),
-        orderBy("createdAt", "desc"),
-        startAfter(lastDoc),
-        limit(PAGE_SIZE)
-      );
-    }
   } else {
-    // Fetch all data without pagination
     q = query(collection(db, "Categories"), orderBy("createdAt", "desc"));
   }
 
