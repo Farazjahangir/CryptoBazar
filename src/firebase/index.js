@@ -33,8 +33,53 @@ export const createUser = async (data) => {
   return authUser.user;
 };
 
-export const getProducts = async () => {
-  const productsSnapshot = await getDocs(collection(db, "Products"));
+// export const getProducts = async () => {
+//   const productsSnapshot = await getDocs(collection(db, "Products"));
+//   const products = productsSnapshot.docs.map((doc) => ({
+//     id: doc.id,
+//     ...doc.data(),
+//   }));
+
+//   // Extract unique category IDs
+//   const categoryIds = [
+//     ...new Set(products.map((p) => p.category).filter(Boolean)),
+//   ];
+
+//   // Fetch all categories in parallel
+//   const categoryDocs = await Promise.all(
+//     categoryIds.map((categoryId) => getDoc(doc(db, "Categories", categoryId)))
+//   );
+
+//   // Create a category map for quick lookup
+//   const categoriesMap = new Map();
+//   categoryDocs.forEach((categorySnap, index) => {
+//     if (categorySnap.exists()) {
+//       categoriesMap.set(categoryIds[index], {
+//         id: categorySnap.id,
+//         ...categorySnap.data(),
+//       });
+//     }
+//   });
+
+//   // Attach category data to products
+//   return products.map((product) => ({
+//     ...product,
+//     category: categoriesMap.get(product.category) || null,
+//   }));
+// };
+
+export const getProducts = async ({ search = "", categoryId = "" } = {}) => {
+  let q = query(collection(db, "Products"), where("isActive", "==", true));
+
+  if (search) {
+    q = query(q, where("name", ">=", search), where("name", "<=", search + "\uf8ff"));
+  }
+
+  if (categoryId) {
+    q = query(q, where("category", "==", categoryId));
+  }
+
+  const productsSnapshot = await getDocs(q);
   const products = productsSnapshot.docs.map((doc) => ({
     id: doc.id,
     ...doc.data(),

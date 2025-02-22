@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { Box, display } from "@mui/system";
 import { Avatar, Tooltip } from "@mui/material";
 import { Delete, Edit } from "@mui/icons-material";
@@ -11,19 +11,64 @@ import AdminProductForm from "./AdminProductForm";
 import styles from "./style.module.scss";
 import { useGetProducts } from "../../hooks/reactQuery/useGetProducts";
 import Chip from "../../Components/Chip";
+import TextInput from "../../Components/TextInput";
+import { useSelector } from "react-redux";
 
 const AdminPrdList = () => {
   const [productFormShow, setProductFormShow] = useState(false);
+  const [searchText, setSearchText] = useState('')
+  const [filters, setFilters] = useState({
+    category: ''
+  })
 
-  const { data: products = [], isFetching: prdLoading } = useGetProducts();
+  const categories = useSelector((state) => state.category.data);
+
+  const { data: products = [], isFetching: prdLoading } = useGetProducts({
+    params: {
+      search: searchText,
+      categoryId: filters.category
+    }
+  });
+
   const toggleProductForm = () => {
     setProductFormShow(!productFormShow);
   };
 
+  const onSearch = (e) => {
+    setSearchText(e.target.value)
+  }
+
   const renderTableHeader = () => (
-    <Box width={180}>
-      <Button value="Add Product" onClick={toggleProductForm} />
+    <Box display="flex" alignItems="center" justifyContent="space-between">
+      <Box width={300}>
+        <TextInput variant="outlined" label="Search" onChange={onSearch} />
+      </Box>
+      <Box width={180}>
+        <Button value="Add Product" onClick={toggleProductForm} />
+      </Box>
     </Box>
+  );
+
+  const handleChangeFilter = (value, key) => {
+    setFilters({...filters, [key]: value})
+  }
+
+  const clearFilter = () => {
+    setFilters({
+      category: ''
+    })
+  }
+  const categoryOptions = useMemo(
+    () =>
+      categories.reduce((acc, item) => {
+        const payload = {
+          value: item.id,
+          name: item.name,
+        };
+        acc.push(payload);
+        return acc;
+      }, []),
+    [categories]
   );
 
   const columns = [
@@ -78,7 +123,12 @@ const AdminPrdList = () => {
       renderCell: (params) => (
         <Box display="flex" alignItems="center" gap={1} flexWrap="wrap">
           {params.value.map((item) => (
-            <Box width={20} height={20} borderRadius={10} sx={{ backgroundColor: item }} />
+            <Box
+              width={20}
+              height={20}
+              borderRadius={10}
+              sx={{ backgroundColor: item }}
+            />
           ))}
         </Box>
       ),
@@ -131,12 +181,9 @@ const AdminPrdList = () => {
           <Box flex={1} mr={1}>
             <Select
               label="Select Category"
-              menus={[
-                {
-                  name: "Shoes",
-                  value: "shoe",
-                },
-              ]}
+              menus={categoryOptions ?? []}
+              handleChange={(e) => handleChangeFilter(e.target.value, 'category')}
+              value={filters.category}
             />
           </Box>
           <Box flex={1}>
@@ -151,7 +198,7 @@ const AdminPrdList = () => {
             />
           </Box>
         </Box>
-        <p className={styles.clearText}>Clear filter</p>
+        <p className={styles.clearText} onClick={clearFilter}>Clear filter</p>
         {/* <Box display="flex" justifyContent="flex-end" mt={1}>
           <Box width={120} mr={2}>
             <Button value="Filter" />
