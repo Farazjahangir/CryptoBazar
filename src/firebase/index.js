@@ -245,3 +245,27 @@ export const deleteCategory = async (category) => {
   const docRef = doc(db, "Categories", category);
   await updateDoc(docRef, { isActive: false, updatedAt: serverTimestamp() });
 };
+
+export const getProductById = async ({id}) => {
+  const productRef = doc(db, "Products", id);
+  const productSnap = await getDoc(productRef);
+
+  if (!productSnap.exists()) {
+    throw new Error("Product not found");
+  }
+
+  let product = { id: productSnap.id, ...productSnap.data() };
+
+  // Agar product ki koi category hai to usko bhi fetch karna
+  if (product.category) {
+    const categoryRef = doc(db, "Categories", product.category);
+    const categorySnap = await getDoc(categoryRef);
+
+    if (categorySnap.exists()) {
+      product.category = { id: categorySnap.id, ...categorySnap.data() };
+    } else {
+      product.category = null;
+    }
+  }
+  return product;
+};

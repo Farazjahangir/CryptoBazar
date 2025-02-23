@@ -1,5 +1,5 @@
 import Grid from "@mui/material/Grid";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Drawer,
   Typography,
@@ -20,6 +20,7 @@ import CollapseList from "../../Components/CollapseList";
 import ProductDisplay from "../../Components/ProductDisplay";
 import { useGetProducts } from "../../hooks/reactQuery/useGetProducts";
 import styles from "./style.module.scss";
+import { SCREEN_PATHS } from "../../constants";
 
 const Shop = () => {
   const [selectedCategory, setSelectedCategory] = useState("");
@@ -45,6 +46,11 @@ const Shop = () => {
     navigate(path);
   };
 
+  useEffect(() => {
+    if (categories.length) {
+      setSelectedCategory(categories[0].id)
+    }
+  }, [categories])
   return (
     <div className={styles.container}>
       <div className={styles.leftContainer}>
@@ -90,7 +96,7 @@ const Shop = () => {
             {products.map((item) => (
               <Grid xs={12} sm={6} md={4} lg={3} item>
                 <ProductDisplay
-                  onClick={() => navigateTo("/product-details")}
+                  onClick={() => navigateTo(`${SCREEN_PATHS.PRODUCT_DETAILS}/${item.id}`)}
                   data={item}
                 />
               </Grid>

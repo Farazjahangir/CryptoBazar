@@ -8,6 +8,7 @@ import ProductDisplay from "../../../Components/ProductDisplay";
 import { useGetProducts } from "../../../hooks/reactQuery/useGetProducts";
 import styles from "./style.module.scss";
 import { Typography } from "@mui/material";
+import { SCREEN_PATHS } from "../../../constants";
 
 const NewArrivalSection = () => {
   const navigate = useNavigate();
@@ -17,7 +18,7 @@ const NewArrivalSection = () => {
     },
   });
 
-  const products  = productsRes ?? []
+  const products = productsRes ?? [];
   const navigateTo = (path) => {
     navigate(path);
   };
@@ -28,16 +29,25 @@ const NewArrivalSection = () => {
       <h1 className={styles.title2}>Discover the Latest Additions</h1>
       <div className={styles.box}>
         <Grid container spacing={2}>
-          {isFetching && <Box display='flex' justifyContent='center' width='100%' mt={3}>
-            <ClipLoader />
-          </Box>}
-          {!isFetching && products.length && products.map((item) => {
-            return (
-              <Grid xs={6} md={4} lg={3} item>
-                <ProductDisplay onClick={() => navigateTo('/product-details')} data={item} />
-              </Grid>
-            );
-          })}
+          {isFetching && (
+            <Box display="flex" justifyContent="center" width="100%" mt={3}>
+              <ClipLoader />
+            </Box>
+          )}
+          {!isFetching &&
+            products.length &&
+            products.map((item) => {
+              return (
+                <Grid xs={6} md={4} lg={3} item>
+                  <ProductDisplay
+                    onClick={() =>
+                      navigateTo(`${SCREEN_PATHS.PRODUCT_DETAILS}/${item.id}`)
+                    }
+                    data={item}
+                  />
+                </Grid>
+              );
+            })}
           {!isFetching && !products.length && <Typography>No Data</Typography>}
         </Grid>
       </div>

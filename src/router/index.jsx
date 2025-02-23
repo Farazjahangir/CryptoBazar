@@ -118,7 +118,7 @@ const Router = () => {
               <Route path={SCREEN_PATHS.HOME} element={<Home />} />
               <Route path={SCREEN_PATHS.Shop} element={<Shop />} />
               <Route
-                path={SCREEN_PATHS.PRODUCT_DETAILS}
+                path={`${SCREEN_PATHS.PRODUCT_DETAILS}/:id`}
                 element={<ProductDetails />}
               />
               <Route path={SCREEN_PATHS.PROFILE} element={<Profile />} />
