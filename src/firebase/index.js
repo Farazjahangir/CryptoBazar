@@ -33,8 +33,18 @@ export const createUser = async (data) => {
   return authUser.user;
 };
 
-// export const getProducts = async () => {
-//   const productsSnapshot = await getDocs(collection(db, "Products"));
+// export const getProducts = async ({ search = "", categoryId = "" } = {}) => {
+//   let q = query(collection(db, "Products"), where("isActive", "==", true));
+
+//   if (search) {
+//     q = query(q, where("name", ">=", search), where("name", "<=", search + "\uf8ff"));
+//   }
+
+//   if (categoryId) {
+//     q = query(q, where("category", "==", categoryId));
+//   }
+
+//   const productsSnapshot = await getDocs(q);
 //   const products = productsSnapshot.docs.map((doc) => ({
 //     id: doc.id,
 //     ...doc.data(),
@@ -68,8 +78,8 @@ export const createUser = async (data) => {
 //   }));
 // };
 
-export const getProducts = async ({ search = "", categoryId = "" } = {}) => {
-  let q = query(collection(db, "Products"), where("isActive", "==", true));
+export const getProducts = async ({ search = "", categoryId = "", limitCount = 5 } = {}) => {
+  let q = query(collection(db, "Products"), where("isActive", "==", true), orderBy("createdAt", "desc"));
 
   if (search) {
     q = query(q, where("name", ">=", search), where("name", "<=", search + "\uf8ff"));
@@ -77,6 +87,10 @@ export const getProducts = async ({ search = "", categoryId = "" } = {}) => {
 
   if (categoryId) {
     q = query(q, where("category", "==", categoryId));
+  }
+
+  if (limitCount) {
+    q = query(q, limit(limitCount));
   }
 
   const productsSnapshot = await getDocs(q);
@@ -112,6 +126,7 @@ export const getProducts = async ({ search = "", categoryId = "" } = {}) => {
     category: categoriesMap.get(product.category) || null,
   }));
 };
+
 
 export const createDoc = async (data, collectionName, docId) => {
   let docRef;

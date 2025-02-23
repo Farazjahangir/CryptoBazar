@@ -6,16 +6,16 @@ import femaleIcon from "../../assets/icons/femaleIcon.png";
 import Rating from "../../Components/Rating";
 import styles from "./styles.module.scss";
 
-const ProductDisplay = ({ onClick = () => {} }) => {
+const ProductDisplay = ({ onClick = () => {}, data = {} }) => {
   return (
     <Card sx={{ borderRadius: 3, cursor: "pointer" }} onClick={onClick}>
-      <CardMedia component="img" alt="green iguana" image={shoe} />
+      <CardMedia component="img" alt="green iguana" image={data?.image} width={300} height={300} />
       <CardContent>
         <div className={styles.detailsBox}>
-          <p className={styles.productName}>Shoe Name</p>
-          <p className={styles.productTypeText}>Product Type</p>
+          <p className={styles.productName}>{data.name}</p>
+          <p className={styles.productTypeText}>{data.category.name}</p>
           <div className={styles.miniBox}>
-            <p className={styles.price}>50$</p>
+            <p className={styles.price}>{data.price} ETH</p>
             <Rating value={3} readonly={true} />
           </div>
         </div>

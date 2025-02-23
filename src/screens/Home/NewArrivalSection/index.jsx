@@ -1,16 +1,26 @@
 import clsx from "clsx";
 import Grid from "@mui/material/Grid";
 import { useNavigate } from "react-router-dom";
+import ClipLoader from "react-spinners/ClipLoader";
+import { Box } from "@mui/system";
 
 import ProductDisplay from "../../../Components/ProductDisplay";
+import { useGetProducts } from "../../../hooks/reactQuery/useGetProducts";
 import styles from "./style.module.scss";
+import { Typography } from "@mui/material";
 
 const NewArrivalSection = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+  const { data: productsRes, isFetching } = useGetProducts({
+    params: {
+      limitCount: 6,
+    },
+  });
 
+  const products  = productsRes ?? []
   const navigateTo = (path) => {
-    navigate(path)
-  }
+    navigate(path);
+  };
 
   return (
     <div className={styles.container}>
@@ -18,13 +28,17 @@ const NewArrivalSection = () => {
       <h1 className={styles.title2}>Discover the Latest Additions</h1>
       <div className={styles.box}>
         <Grid container spacing={2}>
-          {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((i) => {
+          {isFetching && <Box display='flex' justifyContent='center' width='100%' mt={3}>
+            <ClipLoader />
+          </Box>}
+          {!isFetching && products.length && products.map((item) => {
             return (
               <Grid xs={6} md={4} lg={3} item>
-                <ProductDisplay onClick={() => navigateTo('/product-details')} />
+                <ProductDisplay onClick={() => navigateTo('/product-details')} data={item} />
               </Grid>
             );
           })}
+          {!isFetching && !products.length && <Typography>No Data</Typography>}
         </Grid>
       </div>
     </div>

@@ -8,7 +8,7 @@ export const useGetProducts = ({params, options} = {}) => {
   return useQuery({
     queryKey: [queryKeys.USE_GET_PRODUCTS, ...keys],
     queryFn: () => getProducts(params),
-    enabled: true,
+    enabled: options?.enabled ?? true,
     refetchOnWindowFocus: options?.refetchOnWindowFocus ?? false,
   });
 };

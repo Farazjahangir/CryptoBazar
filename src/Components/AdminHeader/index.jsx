@@ -31,6 +31,10 @@ const AdminHeader = ({ toggleDrawer }) => {
     dispatch(logoutUser())
     navigate(SCREEN_PATHS.Login)
   }
+
+  const goToCustomerView = () => {
+    navigate(SCREEN_PATHS.HOME)
+  }
   return (
     <div className={styles.container}>
       <div className={styles.box}>
@@ -44,7 +48,7 @@ const AdminHeader = ({ toggleDrawer }) => {
           <h1>Welcome</h1>
         </Box>
         <Box display="flex" alignItems="center" gap={2}>
-          <Button value="Customer View" />
+          <Button value="Customer View" onClick={goToCustomerView} />
           <div
             style={{ backgroundImage: `url(${dummyDp})`, cursor: "pointer" }}
             className={styles.profilePic}
