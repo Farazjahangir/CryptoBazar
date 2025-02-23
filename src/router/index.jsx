@@ -74,7 +74,7 @@ const Router = () => {
     // <div style={{ display: 'flex' }}>
     <div
       style={{
-        minHeight: "100vh",
+        height: '100vh',
         ...(location.pathname.startsWith("/admin")
           ? { display: "flex", flexDirection: "row" }
           : {}),
@@ -95,6 +95,7 @@ const Router = () => {
           flexDirection: "column",
           width: "100%",
           overflowX: "hidden",
+          height: '100%',
           ...(location.pathname.startsWith("/admin")
             ? { backgroundColor: "#e2e7e84d" }
             : {}),
