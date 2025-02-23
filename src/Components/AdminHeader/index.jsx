@@ -73,9 +73,9 @@ const AdminHeader = ({ toggleDrawer }) => {
             }}
           >
             <Box padding={1}>
-              <Typography fontSize={18}>{user.name}</Typography>
+              <Typography fontSize={18}>{user?.name}</Typography>
               <Typography color="#808080" variant="body2">
-                {user.email}
+                {user?.email}
               </Typography>
             </Box>
             <Divider />

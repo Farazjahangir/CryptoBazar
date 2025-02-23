@@ -39,16 +39,18 @@ import ProtectedRoute from "./protectedRoute";
 import { Box } from "@mui/system";
 import { useGetCategories } from "../hooks/reactQuery/useGetCategories";
 import { setCategory, setCategoryLoading } from "../redux/categorySlice";
+import AuthRoute from "./AuthRoute";
 
 const Router = () => {
   const [drawerState, setDrawerState] = useState(false);
   const [adminDrawerState, setAdminDrawerState] = useState(false);
   const location = useLocation();
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
-  const {data: categoriesRes, isFetching: categoryLoading} = useGetCategories()
+  const { data: categoriesRes, isFetching: categoryLoading } =
+    useGetCategories();
 
-  const categories = categoriesRes?.data?.length ? categoriesRes?.data : []
+  const categories = categoriesRes?.data?.length ? categoriesRes?.data : [];
 
   const toggleAdminDrawer = () => {
     setAdminDrawerState(!adminDrawerState);
@@ -60,13 +62,13 @@ const Router = () => {
 
   useEffect(() => {
     if (categories.length) {
-      dispatch(setCategory(categories))
+      dispatch(setCategory(categories));
     }
-  }, [categories])
+  }, [categories]);
 
   useEffect(() => {
-    dispatch(setCategoryLoading(categoryLoading))
-  }, [categoryLoading])
+    dispatch(setCategoryLoading(categoryLoading));
+  }, [categoryLoading]);
 
   return (
     // <div style={{ display: 'flex' }}>
@@ -144,8 +146,10 @@ const Router = () => {
                 element={<AdminOrderDetails />}
               />
             </Route>
-            <Route path={SCREEN_PATHS.Login} element={<Login />} />
-            <Route path={SCREEN_PATHS.Signup} element={<Signup />} />
+            <Route path="/" element={<AuthRoute />}>
+              <Route path={SCREEN_PATHS.Login} element={<Login />} />
+              <Route path={SCREEN_PATHS.Signup} element={<Signup />} />
+            </Route>
           </Routes>
         </div>
         {!ROUTES_WITHOUT_HEADER.includes(location.pathname) && (

@@ -11,6 +11,7 @@ const ProtectedRoute = ({ element, ...rest }) => {
   const user = useSelector((state) => state.user.user);
   
   if (!user && PROTECTED_ROUTES.includes(path)) {
+    console.log("PROTECT")
     return <Navigate to={SCREEN_PATHS.Login} replace />
   }
 
