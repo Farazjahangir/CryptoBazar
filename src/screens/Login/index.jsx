@@ -28,6 +28,7 @@ const Login = () => {
         email: userCreds.email,
         password: userCreds.password,
       });
+      console.log("user", user)
       dispatch(setUser(user));
       if (user.role === "admin") {
         navigateTo("/admin/dashboard");
