@@ -48,7 +48,6 @@ const AdminHeader = ({ toggleDrawer }) => {
           <h1>Welcome</h1>
         </Box>
         <Box display="flex" alignItems="center" gap={2}>
-          <Button value="Customer View" onClick={goToCustomerView} />
           <div
             style={{ backgroundImage: `url(${dummyDp})`, cursor: "pointer" }}
             className={styles.profilePic}
@@ -84,6 +83,19 @@ const AdminHeader = ({ toggleDrawer }) => {
             </Box>
             <Divider />
             <Box>
+            <Typography
+                
+                padding={1}
+                sx={{
+                  cursor: "pointer",
+                  "&:hover": {
+                    backgroundColor: "#e2e7e84d",
+                  },
+                }}
+                onClick={goToCustomerView}
+              >
+                Customer View
+              </Typography>
               <Typography
                 
                 padding={1}

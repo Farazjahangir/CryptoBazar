@@ -20,7 +20,6 @@ const Header = () => {
   const user = useSelector(state => state.user.user)
   const fullScreenLoader = useSelector(state => state.fullScreenLoader.loading)
 
-  console.log("fullScreenLoader", fullScreenLoader)
   const navigateTo = (path) => {
     navigate(path)
   }
@@ -88,6 +87,19 @@ const Header = () => {
             </Box>
             <Divider />
             <Box>
+            {user.role === 'admin' && <Typography
+                
+                padding={1}
+                sx={{
+                  cursor: "pointer",
+                  "&:hover": {
+                    backgroundColor: "#e2e7e84d",
+                  },
+                }}
+                onClick={() => navigateTo(SCREEN_PATHS.ADM_DASHBOARD)}
+              >
+                Admin Dashboard
+              </Typography>}
               <Typography
                 
                 padding={1}
