@@ -1,10 +1,10 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import Grid from "@mui/material/Grid";
 import { CheckCircle } from "@mui/icons-material";
 import { Box, Container } from "@mui/system";
 import { useNavigate, useParams } from "react-router-dom";
 import ClipLoader from "react-spinners/ClipLoader";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useMediaQuery, useTheme } from "@mui/system";
 
 import Rating from "../../Components/Rating";
@@ -15,18 +15,21 @@ import ReviewSection from "./ReviewSection";
 import styles from "./style.module.scss";
 import { useGetProductById } from "../../hooks/reactQuery/useGetProductById";
 import { SCREEN_PATHS } from "../../constants";
-import Chip from "../../Components/Chip"
+import Chip from "../../Components/Chip";
 import { Typography } from "@mui/material";
-import {toggleLoader} from "../../redux/fullScreenLoaderSlice"
+import { toggleLoader } from "../../redux/fullScreenLoaderSlice";
+import { addToCart } from "../../redux/cartSlice";
+import { useDrawer } from "../../ContextApi/DrawerContext";
 
 const ProductDetails = () => {
   const [count, setCount] = useState(0);
   const { id } = useParams();
   const navigate = useNavigate();
-  const dispatch = useDispatch()
-    const theme = useTheme();
-    const isSmallerThanMedium = useMediaQuery(theme.breakpoints.down("md"));
-  
+  const dispatch = useDispatch();
+  const theme = useTheme();
+  const isSmallerThanMedium = useMediaQuery(theme.breakpoints.down("md"));
+  const { setDrawerState } = useDrawer();
+  const cart = useSelector(state => state.cart.cart)
 
   const { data, isFetching } = useGetProductById({
     params: {
@@ -57,9 +60,32 @@ const ProductDetails = () => {
     setCount(val);
   };
 
+  const onAddToCart = () => {
+    dispatch(
+      addToCart({
+        item: data,
+        quantity: count,
+      })
+    );
+    setDrawerState(true)
+  };
+
   useEffect(() => {
-    dispatch(toggleLoader(isFetching))
-  }, [isFetching])
+    dispatch(toggleLoader(isFetching));
+  }, [isFetching]);
+
+  const fromCart = useMemo(() => {
+    if (data && cart.length) {
+      const foundItem = cart.find(item => item.item.id === data.id)
+      if (foundItem) {
+        setCount(foundItem.quantity)
+        return foundItem
+      }
+      return null
+    }
+    return null
+  }, [data, cart])
+
   return (
     <Container sx={{ marginTop: 10 }}>
       <Grid container spacing={2}>
@@ -67,12 +93,12 @@ const ProductDetails = () => {
           {/* <img src={shoe} className={styles.image} /> */}
           <Box
             width="100%"
-            height={isSmallerThanMedium ? 500 : '100%'}
+            height={isSmallerThanMedium ? 500 : "100%"}
             sx={{
               backgroundImage: `url(${data?.image})`,
               backgroundSize: "contain",
               backgroundPosition: "center",
-              backgroundRepeat: 'no-repeat'
+              backgroundRepeat: "no-repeat",
             }}
           />
         </Grid>
@@ -90,28 +116,33 @@ const ProductDetails = () => {
           <p className={styles.categoryName}>{data?.category?.name}</p>
           <p className={styles.productName}>{data?.name}</p>
           {data?.sizes && Array.isArray(data.sizes) && data?.sizes.length && (
-            <Box display='flex' alignItems='center' gap={1.4} mb={2}>
+            <Box display="flex" alignItems="center" gap={1.4} mb={2}>
               <Typography>Sizes:</Typography>
-              {data.sizes.map(item => (
+              {data.sizes.map((item) => (
                 <Chip label={item} size="small" selected />
               ))}
             </Box>
           )}
-            {data?.colors && Array.isArray(data.colors) && data?.colors.length && (
-            <Box display='flex' alignItems='center' gap={1.4} mb={2}>
-              <Typography>Colors:</Typography>
-              {data.colors.map(item => (
-                <Box sx={{ backgroundColor: item }} width={20} height={20} borderRadius={10} />
-              ))}
-            </Box>
-          )}
+          {data?.colors &&
+            Array.isArray(data.colors) &&
+            data?.colors.length && (
+              <Box display="flex" alignItems="center" gap={1.4} mb={2}>
+                <Typography>Colors:</Typography>
+                {data.colors.map((item) => (
+                  <Box
+                    sx={{ backgroundColor: item }}
+                    width={20}
+                    height={20}
+                    borderRadius={10}
+                  />
+                ))}
+              </Box>
+            )}
           <div className={styles.priceBox}>
             <p className={styles.price}>{data?.price} ETH</p>
             <Rating readonly={true} />
           </div>
-          <p className={styles.productAbout}>
-            {data?.description}
-          </p>
+          <p className={styles.productAbout}>{data?.description}</p>
           <div className={styles.counterBox}>
             <Counter
               value={count}
@@ -121,7 +152,11 @@ const ProductDetails = () => {
               containerClass={styles.counterContainer}
             />
             <div className={styles.btnBox}>
-              <Button value="Add to Cart" />
+              <Button
+                value={fromCart ? "Update cart" : "Add to cart"}
+                onClick={onAddToCart}
+                disabled={count <= 0}
+              />
             </div>
           </div>
           <div className={styles.borderLine1} />

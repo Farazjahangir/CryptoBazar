@@ -1,22 +1,41 @@
 import { useState } from "react";
 import { Close } from "@mui/icons-material";
-import { Divider } from "@mui/material";
+import { Divider, Typography } from "@mui/material";
 import Counter from "../Counter";
 import clsx from "clsx";
+import { useSelector, useDispatch } from "react-redux";
 
 import { useDrawer } from "../../ContextApi/DrawerContext";
 import Button from "../Button";
 import shoe from "../../assets/images/shoe.jpg";
 import Drawer from "../Drawer";
+import {incrementQuantity, decrementQuantity, removeFromCart} from "../../redux/cartSlice"
 import styles from "./style.module.scss";
+import { calculateTotal } from "../../utils/globalHelpers";
 
 const CartDrawer = ({ open }) => {
   const [counter, setCounter] = useState(1);
   const { drawerState, setDrawerState } = useDrawer();
+  const dispatch = useDispatch()
+
+  const cart = useSelector((state) => state.cart.cart);
 
   const toggleDrawer = () => {
     setDrawerState(!drawerState);
   };
+
+  const onAdd = (item) => {
+    dispatch(incrementQuantity(item.item.id))
+  }
+
+  const onMinus = (item) => {
+    dispatch(decrementQuantity(item.item.id))
+  }
+
+  const onRemoveFromCart = (id) => {
+    dispatch(removeFromCart(id))
+  }
+
   return (
     <Drawer open={drawerState} minWidth={380} onClose={toggleDrawer}>
       <div className={styles.container}>
@@ -24,7 +43,9 @@ const CartDrawer = ({ open }) => {
           <div className={styles.header}>
             <div className={styles.headerLeftSection}>
               <h2>Cart</h2>
-              <h2 className={styles.itemCount}>3</h2>
+              {!cart.length && (
+                <h2 className={styles.itemCount}>{cart.length}</h2>
+              )}
             </div>
             <Close
               fontSize="large"
@@ -34,21 +55,38 @@ const CartDrawer = ({ open }) => {
           </div>
         </div>
         <Divider />
-        <div className={styles.productContainer}>
-          {[1, 2, 3, 4].map((item) => (
+        <div
+          className={clsx(
+            styles.productContainer,
+            !cart.length && styles.emptyCartMessage
+          )}
+        >
+          {!cart.length && (
+            <Typography fontSize={19}>You have 0 items in cart</Typography>
+          )}
+          {cart.map((cartItem) => (
             <>
               <div className={styles.pad18}>
                 <div className={styles.productBox}>
-                  <div className={styles.productImg} />
+                  <div
+                    style={{ backgroundImage: `url(${cartItem.item.image})` }}
+                    className={styles.productImg}
+                  />
                   <div className={styles.productDetailsBox}>
                     <div className={styles.productNameBox}>
-                      <p className={styles.productName}>Shoe</p>
-                      <Close className={styles.closeIcon} />
+                      <p className={styles.productName}>{cartItem.item.name}</p>
+                      <Close className={styles.closeIcon} onClick={() => onRemoveFromCart(cartItem.item.id)} />
                     </div>
                     <div className={styles.counterBox}>
-                      <Counter value={counter} />
-                      <p className={styles.price}>50$</p>
+                      <Counter
+                        value={cartItem.quantity}
+                        onAdd={() => onAdd(cartItem)}
+                        onMinus={() => onMinus(cartItem)}
+                      />
                     </div>
+                    <p className={styles.price}>
+                      {cartItem.item.price * cartItem.quantity} ETH
+                    </p>
                   </div>
                 </div>
               </div>
@@ -56,13 +94,13 @@ const CartDrawer = ({ open }) => {
             </>
           ))}
         </div>
-        <div className={clsx(styles.footer, styles.pad18)}>
+       {!!cart.length && <div className={clsx(styles.footer, styles.pad18)}>
           <div className={styles.totalBox}>
             <p>Subtotal</p>
-            <p>100$</p>
+            <p>{calculateTotal(cart)}</p>
           </div>
           <Button value="Checkout" />
-        </div>
+        </div>}
       </div>
     </Drawer>
   );
