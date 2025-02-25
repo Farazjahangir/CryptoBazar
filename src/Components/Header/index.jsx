@@ -43,6 +43,7 @@ const Header = () => {
 
   const onLogout = () => {
     dispatch(logoutUser())
+    setAnchorEl(null);
   }
 
   return (
