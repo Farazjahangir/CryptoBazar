@@ -4,6 +4,7 @@ import { CheckCircle } from "@mui/icons-material";
 import { Box, Container } from "@mui/system";
 import { useNavigate, useParams } from "react-router-dom";
 import ClipLoader from "react-spinners/ClipLoader";
+import { useDispatch } from "react-redux";
 
 import Rating from "../../Components/Rating";
 import Counter from "../../Components/Counter";
@@ -15,13 +16,15 @@ import { useGetProductById } from "../../hooks/reactQuery/useGetProductById";
 import { SCREEN_PATHS } from "../../constants";
 import Chip from "../../Components/Chip"
 import { Typography } from "@mui/material";
+import {toggleLoader} from "../../redux/fullScreenLoaderSlice"
 
 const ProductDetails = () => {
   const [count, setCount] = useState(0);
   const { id } = useParams();
   const navigate = useNavigate();
+  const dispatch = useDispatch()
 
-  const { data } = useGetProductById({
+  const { data, isFetching } = useGetProductById({
     params: {
       id,
     },
@@ -50,6 +53,9 @@ const ProductDetails = () => {
     setCount(val);
   };
 
+  useEffect(() => {
+    dispatch(toggleLoader(isFetching))
+  }, [isFetching])
   return (
     <Container sx={{ marginTop: 10 }}>
       <Grid container spacing={2}>

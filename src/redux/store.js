@@ -11,6 +11,7 @@ const persistConfig = {
     key: 'root',
     version: 1,
     storage,
+    blacklist: ['fullScreenLoader']
 }
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)

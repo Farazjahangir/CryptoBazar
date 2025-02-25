@@ -7,7 +7,8 @@ import {
   useLocation,
 } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import ClipLoader from "react-spinners/ClipLoader";
 
 import {
   SCREEN_PATHS,
@@ -46,6 +47,7 @@ const Router = () => {
   const [adminDrawerState, setAdminDrawerState] = useState(false);
   const location = useLocation();
   const dispatch = useDispatch();
+  const fullScreenLoader = useSelector(state => state.fullScreenLoader.loading)
 
   const { data: categoriesRes, isFetching: categoryLoading } =
     useGetCategories();
@@ -74,12 +76,25 @@ const Router = () => {
     // <div style={{ display: 'flex' }}>
     <div
       style={{
-        height: '100vh',
+        height: "100vh",
         ...(location.pathname.startsWith("/admin")
           ? { display: "flex", flexDirection: "row" }
           : {}),
+        position: "relative",
       }}
     >
+      {fullScreenLoader && <Box
+        position="absolute"
+        sx={{ backgroundColor: "#0000002b" }}
+        width="100%"
+        height="100%"
+        zIndex={3}
+        display='flex'
+        alignItems='center'
+        justifyContent='center'
+      >
+        <ClipLoader size={50}  />
+      </Box>}
       {!ROUTES_WITHOUT_HEADER.includes(location.pathname) && (
         <CartDrawer open={drawerState} />
       )}
@@ -95,7 +110,7 @@ const Router = () => {
           flexDirection: "column",
           width: "100%",
           overflowX: "hidden",
-          height: '100%',
+          height: "100%",
           ...(location.pathname.startsWith("/admin")
             ? { backgroundColor: "#e2e7e84d" }
             : {}),
