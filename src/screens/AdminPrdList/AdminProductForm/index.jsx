@@ -24,6 +24,7 @@ const DEFAULT_STATE = {
   category: "",
   image: "",
   sizes: [],
+  description: ''
 };
 
 const AdminProductForm = ({ open, onClose, productData }) => {
@@ -178,6 +179,16 @@ const AdminProductForm = ({ open, onClose, productData }) => {
             />
           </Box>
         ))}
+      </Box>
+      <Box mt={2}>
+      <TextInput
+            label="Description"
+            variant="outlined"
+            sx={{ backgroundColor: "#ffffff" }}
+            onChange={(_, value) => handleChange(value, "description")}
+            value={data.description}
+            multiline
+          />
       </Box>
     </Box>
   );
