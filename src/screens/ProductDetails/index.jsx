@@ -5,6 +5,7 @@ import { Box, Container } from "@mui/system";
 import { useNavigate, useParams } from "react-router-dom";
 import ClipLoader from "react-spinners/ClipLoader";
 import { useDispatch } from "react-redux";
+import { useMediaQuery, useTheme } from "@mui/system";
 
 import Rating from "../../Components/Rating";
 import Counter from "../../Components/Counter";
@@ -23,6 +24,9 @@ const ProductDetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch()
+    const theme = useTheme();
+    const isSmallerThanMedium = useMediaQuery(theme.breakpoints.down("md"));
+  
 
   const { data, isFetching } = useGetProductById({
     params: {
@@ -59,22 +63,23 @@ const ProductDetails = () => {
   return (
     <Container sx={{ marginTop: 10 }}>
       <Grid container spacing={2}>
-        <Grid item sm={6} xs={12}>
+        <Grid item md={6} xs={12}>
           {/* <img src={shoe} className={styles.image} /> */}
           <Box
             width="100%"
-            height='100%'
+            height={isSmallerThanMedium ? 500 : '100%'}
             sx={{
               backgroundImage: `url(${data?.image})`,
-              backgroundSize: "cover",
+              backgroundSize: "contain",
               backgroundPosition: "center",
+              backgroundRepeat: 'no-repeat'
             }}
           />
         </Grid>
         <Grid
           item
           // lg={6}
-          sm={6}
+          md={6}
           xs={12}
           sx={{
             display: "flex",
