@@ -30,6 +30,7 @@ import AdminPrdList from "../screens/AdminPrdList";
 import AdminCatList from "../screens/AdminCatList";
 import AdminOrderList from "../screens/AdminOrderList";
 import AdminOrderDetails from "../screens/AdminOrderDetails";
+import Payment from "../screens/Payment";
 
 import Header from "../Components/Header";
 import Footer from "../Components/Footer";
@@ -160,6 +161,10 @@ const Router = () => {
               <Route
                 path={SCREEN_PATHS.ADM_ORDER_DETAILS}
                 element={<AdminOrderDetails />}
+              />
+              <Route
+                path={SCREEN_PATHS.PAYMENT}
+                element={<Payment />}
               />
             </Route>
             <Route path="/" element={<AuthRoute />}>

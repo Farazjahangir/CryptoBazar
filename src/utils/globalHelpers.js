@@ -7,5 +7,5 @@ export function getRandomInt(min, max) {
 export const calculateTotal = (cart) => {
   return cart.reduce((acc, item) => {
     return acc + (item.item.price * item.quantity)
-  }, 0)
+  }, 0).toFixed(3)
 }

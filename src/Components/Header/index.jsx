@@ -87,7 +87,7 @@ const Header = () => {
             </Box>
             <Divider />
             <Box>
-            {user.role === 'admin' && <Typography
+            {user && user.role === 'admin' && <Typography
                 
                 padding={1}
                 sx={{

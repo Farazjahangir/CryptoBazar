@@ -4,20 +4,28 @@ import { Divider, Typography } from "@mui/material";
 import Counter from "../Counter";
 import clsx from "clsx";
 import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 import { useDrawer } from "../../ContextApi/DrawerContext";
 import Button from "../Button";
 import shoe from "../../assets/images/shoe.jpg";
 import Drawer from "../Drawer";
-import {incrementQuantity, decrementQuantity, removeFromCart} from "../../redux/cartSlice"
+import {
+  incrementQuantity,
+  decrementQuantity,
+  removeFromCart,
+} from "../../redux/cartSlice";
 import styles from "./style.module.scss";
 import { calculateTotal } from "../../utils/globalHelpers";
+import { SCREEN_PATHS } from "../../constants";
 
 const CartDrawer = ({ open }) => {
   const [counter, setCounter] = useState(1);
   const { drawerState, setDrawerState } = useDrawer();
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
+  const [account, setAccount] = useState(null);
 
+  const navigate = useNavigate()
   const cart = useSelector((state) => state.cart.cart);
 
   const toggleDrawer = () => {
@@ -25,15 +33,21 @@ const CartDrawer = ({ open }) => {
   };
 
   const onAdd = (item) => {
-    dispatch(incrementQuantity(item.item.id))
-  }
+    dispatch(incrementQuantity(item.item.id));
+  };
 
   const onMinus = (item) => {
-    dispatch(decrementQuantity(item.item.id))
-  }
+    dispatch(decrementQuantity(item.item.id));
+  };
 
   const onRemoveFromCart = (id) => {
-    dispatch(removeFromCart(id))
+    dispatch(removeFromCart(id));
+  };
+
+
+  const goToCheckout = () => {
+    navigate(SCREEN_PATHS.PAYMENT)
+    setDrawerState(false)
   }
 
   return (
@@ -75,7 +89,10 @@ const CartDrawer = ({ open }) => {
                   <div className={styles.productDetailsBox}>
                     <div className={styles.productNameBox}>
                       <p className={styles.productName}>{cartItem.item.name}</p>
-                      <Close className={styles.closeIcon} onClick={() => onRemoveFromCart(cartItem.item.id)} />
+                      <Close
+                        className={styles.closeIcon}
+                        onClick={() => onRemoveFromCart(cartItem.item.id)}
+                      />
                     </div>
                     <div className={styles.counterBox}>
                       <Counter
@@ -94,13 +111,15 @@ const CartDrawer = ({ open }) => {
             </>
           ))}
         </div>
-       {!!cart.length && <div className={clsx(styles.footer, styles.pad18)}>
-          <div className={styles.totalBox}>
-            <p>Subtotal</p>
-            <p>{calculateTotal(cart)}</p>
+        {!!cart.length && (
+          <div className={clsx(styles.footer, styles.pad18)}>
+            <div className={styles.totalBox}>
+              <p>Subtotal</p>
+              <p>{calculateTotal(cart)}</p>
+            </div>
+            <Button value="Checkout" onClick={goToCheckout} />
           </div>
-          <Button value="Checkout" />
-        </div>}
+        )}
       </div>
     </Drawer>
   );

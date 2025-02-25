@@ -16,7 +16,8 @@ const TextInput = ({
   sx,
   multiline = false,
   maxRows = 8,
-  minRows = 4
+  minRows = 4,
+  disabled
 }) => {
   
   const handleChange = (e) => {
@@ -41,6 +42,7 @@ const TextInput = ({
       multiline={multiline}
       maxRows={maxRows}
       minRows={minRows}
+      disabled={disabled}
     />
   );
 };
